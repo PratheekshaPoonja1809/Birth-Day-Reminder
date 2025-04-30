@@ -55,16 +55,15 @@
   border-radius: 6px;
   cursor: pointer;
   background-color: #f9f9f9;
-  width: 50%;
+  width: 38%;
   margin: 5px;
 }
 
 .dropdown-list {
   position: absolute;
   top: 70%;
-  width: 56%;
-  /* left: 0; */
-  right: 7%;
+  width: 44%;
+  right: 1%;
   border: 1px solid #ccc;
   border-radius: 6px;
   background: white;
@@ -94,4 +93,9 @@
 
 .menu-icons {
   float: right;
+}
+
+.menu-icons > *{
+  margin: 5px;
+  cursor: pointer;
 }
