@@ -95,7 +95,43 @@
   float: right;
 }
 
-.menu-icons > *{
+.menu-icons>* {
   margin: 5px;
   cursor: pointer;
+}
+
+.birthday-list-cntr {
+  display: grid;
+  place-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  margin: 2% 0;
+  gap: 10px;
+}
+
+
+.birthday-list-cntr img {
+  border-radius: 50%;
+  box-shadow: 1px 5px 10px rgb(209, 199, 209);
+  transition: transform 0.7s, box-shadow 0.7s;
+  cursor: zoom-in;
+}
+
+.birthday-list-cntr img:hover {
+  transform: scale(1.15);
+}
+
+.birthday-list-cntr section {
+  border: 1px solid violet;
+  padding: 3% 10%;
+  margin: 0px 0px 5%;
+  border-radius: 10px;
+  transition: transform 0.7s, box-shadow 0.7s;
+  width: 70%;
+  max-width: 200px;
+  place-items: center;
+}
+
+.birthday-list-cntr section:hover {
+  box-shadow: 1px 5px 10px violet;
+  transform: scale(1.05);
 }
