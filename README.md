@@ -3,4 +3,4 @@ Helps you easily keep track of friends and family members birthdays. It sends ti
 
 
 ### 🚀 Live Demo  
-👉 [View it on GitHub Pages](https://pratheekshapoonja1809.github.io/Birth-Day-Reminder/)
+👉 [Experience the app live](https://pratheekshapoonja1809.github.io/Birth-Day-Reminder/)
