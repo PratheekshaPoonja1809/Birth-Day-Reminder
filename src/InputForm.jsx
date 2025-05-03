@@ -1,16 +1,18 @@
 import { useState } from "react";
 import { InputFields } from "./utils/InputFields";
-import { INPUT_FORM_DATA, PROFILE_PIC_TEXT } from "./utils/Constants";
+import {
+  INPUT_FORM_DATA,
+  PROFILE_PIC_TEXT,
+  useSession,
+} from "./utils/Constants";
 import { X } from "react-feather";
 import { Button } from "./utils/Button";
 
-export const InputForm = () => {
+export const InputForm = ({ onClose }) => {
   let [inputs, setInputs] = useState(INPUT_FORM_DATA);
   let [err, setErr] = useState(INPUT_FORM_DATA);
-  const [image, setImage] = useState(() => {
-    const storedImage = sessionStorage.getItem("uploadedImage");
-    return storedImage ? storedImage : null;
-  });
+  const [image, setImage] = useState();
+  const { setSession } = useSession();
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -20,6 +22,7 @@ export const InputForm = () => {
         const base64Image = reader.result;
         setImage(base64Image);
         sessionStorage.setItem("uploadedImage", base64Image);
+        setInputs((val) => ({ ...val, "image": base64Image }));
       };
       reader.readAsDataURL(file);
     }
@@ -71,12 +74,12 @@ export const InputForm = () => {
   const resetForm = () => {
     setInputs(INPUT_FORM_DATA);
     setErr(INPUT_FORM_DATA);
-    console.log(inputs);
   };
 
   const submitForm = (e) => {
     e.preventDefault();
-    alert(`Hello user ${inputs.name}. Your email id is ${inputs.email}`);
+    setSession((prev) => [...prev, inputs]);
+    onClose(false);
   };
 
   return (
@@ -118,7 +121,7 @@ export const InputForm = () => {
             onChange={changeInputData}
             onBlur={handleBlur}
             maxLength="20"
-            hasError={err.name}
+            haserror={err.name}
           />
           <InputFields
             label="Mail Id"
@@ -128,7 +131,7 @@ export const InputForm = () => {
             onChange={changeInputData}
             onBlur={handleBlur}
             maxLength="20"
-            hasError={err.email}
+            haserror={err.email}
           />
           <InputFields
             label="DOB"
@@ -137,7 +140,7 @@ export const InputForm = () => {
             value={inputs.dob ?? ""}
             onChange={changeInputData}
             onBlur={handleBlur}
-            hasError={err.dob}
+            haserror={err.dob}
           />
           <InputFields
             label="Phone Number"
@@ -146,7 +149,7 @@ export const InputForm = () => {
             value={inputs.phoneNo ?? ""}
             onChange={changeInputData}
             onBlur={handleBlur}
-            hasError={err.phoneNo}
+            haserror={err.phoneNo}
           />
           <InputFields
             label="Relation"

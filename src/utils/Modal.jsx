@@ -3,20 +3,22 @@ import { createPortal } from "react-dom";
 import { Bell, X } from "react-feather";
 import { WARN_MSG } from "./Constants";
 
-export const Modal = ({ headerName, onClose, children }) => {
+export const Modal = ({ headerName, onClose, children, alert, width }) => {
   const [showAlertMsg, setAlertMsg] = useState(false);
   return createPortal(
     <div className="transparent-overlay">
-      <div className="portal-overlay">
+      <div className="portal-overlay" style={{ width: width }}>
         <h2 className="modal-header">
           {headerName}{" "}
-          <Bell
-            className="alert-info"
-            onClick={() => setAlertMsg(!showAlertMsg)}
-          />
+          {alert && (
+            <Bell
+              className="alert-info"
+              onClick={() => setAlertMsg(!showAlertMsg)}
+            />
+          )}
           {showAlertMsg && <span className="session-msg">{WARN_MSG}</span>}
           <span>
-            <X onClick={() => onClose(false)} className="close-modal"/>
+            <X onClick={() => onClose(false)} className="close-modal" />
           </span>
         </h2>
         <div className="card">{children}</div>

@@ -110,7 +110,8 @@
   border-radius: 50%;
   box-shadow: 1px 5px 10px rgb(209, 199, 209);
   transition: transform 0.7s, box-shadow 0.7s;
-  cursor: zoom-in;
+  height: 150px;
+  width: 150px;
 }
 
 .birthday-list-cntr section {
@@ -267,14 +268,13 @@
   margin: 1.5%;
 }
 
-.input-field-section input{
+.input-field-section input {
   padding: 10px;
   margin: 2px 2px 1%;
   width: 55%;
   border-radius: 7px;
   border: 1px solid #aaa;
 }
-
 
 .input-field-section label {
   font-size: 13px;
@@ -288,7 +288,7 @@
     top 0.7s ease, background-color 0.7s ease;
 }
 
-.input-field-section input:focus{
+.input-field-section input:focus {
   border: 1px solid rgb(14, 145, 102);
   outline: none;
   box-shadow: 0 0 5px rgba(14, 145, 102, 0.5);
@@ -340,6 +340,7 @@
 
 
 @keyframes alert-bounce {
+
   0%,
   50%,
   100% {
@@ -360,4 +361,18 @@
   position: absolute;
   right: 1%;
   top: 2%;
+}
+
+.contact-info-icon {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  margin: 0 5px;
+}
+
+.details-icon {
+  width: 18px;
+  height: 18px;
+  color: #950995;
 }

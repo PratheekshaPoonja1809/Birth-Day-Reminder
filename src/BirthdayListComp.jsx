@@ -5,14 +5,17 @@ import {
   INITIAL_REDUCER_DATA,
   DROPDOWN_OPTIONS,
   REDUCER_DATA,
+  FEEDBACK,
+  useSession,
 } from "./utils/Constants";
 import { Dropdown } from "./utils/Dropdown";
-import { Download, UserPlus } from "react-feather";
+import { Download, Linkedin, Mail, Phone, Star, UserPlus } from "react-feather";
 import Tippy from "@tippyjs/react";
 import dayjs from "dayjs";
 import { FilterDateFormatter, getDOB } from "./helper";
 import { Modal } from "./utils/Modal";
 import { InputForm } from "./InputForm";
+import ProfilePicDefault from "./assets/picture.png";
 
 const reducerFn = (state, action) => {
   switch (action.type) {
@@ -31,8 +34,11 @@ const reducerFn = (state, action) => {
 
 export const BirthdayListComp = () => {
   const [openModal, setOpenModal] = useState(false);
+  const [isFeedbackRequested, setFeedbackRequested] = useState(false);
 
   const [state, dispatch] = useReducer(reducerFn, INITIAL_REDUCER_DATA);
+
+  const { session } = useSession();
 
   const loadSampleData = () => {
     if (!state.dataSource.length)
@@ -68,7 +74,9 @@ export const BirthdayListComp = () => {
       case DROPDOWN_OPTIONS[2]:
         formatter = DATE_TYPE.MMDD;
         compareDate =
-          state.selected === DROPDOWN_OPTIONS[2] ? today.add(1, DATE_TYPE.DAY) : today;
+          state.selected === DROPDOWN_OPTIONS[2]
+            ? today.add(1, DATE_TYPE.DAY)
+            : today;
         break;
       case DROPDOWN_OPTIONS[3]:
         formatter = DATE_TYPE.MMDD;
@@ -89,18 +97,21 @@ export const BirthdayListComp = () => {
     dispatch({ type: REDUCER_DATA.SHOW_CONTENT, payload: [] });
 
     if (state.selected === DROPDOWN_OPTIONS[0]) {
-      dispatch({ type: REDUCER_DATA.LIST, payload: state.dataSource });
+      dispatch({
+        type: REDUCER_DATA.LIST,
+        payload: [...session, ...state.dataSource],
+      });
     } else {
       const filtered = state.dataSource.filter((item) =>
         FilterDateFormatter(formatter, compareDate, dayjs(item.dob))
       );
-      dispatch({ type: REDUCER_DATA.LIST, payload: filtered });
+      dispatch({ type: REDUCER_DATA.LIST, payload: [...session, ...filtered] });
     }
-  }, [state.selected, state.dataSource]);
+  }, [state.selected, state.dataSource, session]);
 
   useEffect(() => {
     timelineSelected();
-  }, [state.selected, timelineSelected]);
+  }, [state.selected, timelineSelected, session]);
 
   return (
     <main className="main-container">
@@ -119,10 +130,43 @@ export const BirthdayListComp = () => {
         <Tippy content="Load Sample Data">
           <Download onClick={loadSampleData} />
         </Tippy>
+        <Tippy content="Give us your thoughts">
+          <Star
+            className="menu-option "
+            onClick={() => setFeedbackRequested(!isFeedbackRequested)}
+          />
+        </Tippy>
       </section>
       {openModal && (
-        <Modal headerName="Contact Update" onClose={setOpenModal}>
-          <InputForm />
+        <Modal headerName="Contact Update" onClose={setOpenModal} alert={true}>
+          <InputForm onClose={setOpenModal} />
+        </Modal>
+      )}
+      {isFeedbackRequested && (
+        <Modal
+          onClose={() => setFeedbackRequested(!isFeedbackRequested)}
+          headerName="Share Your Thoughts"
+          width="35%"
+        >
+          <p className="feedback-para">
+            {FEEDBACK.MSG1}
+            <a href={FEEDBACK.MAIL}>
+              <Tippy content="Get in touch via email">
+                <Mail width="35px" />
+              </Tippy>
+            </a>{" "}
+            or{" "}
+            <a
+              href={FEEDBACK.LINKEDIN}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Tippy content="Connect with me on LinkedIn">
+                <Linkedin width="35px" />
+              </Tippy>
+            </a>
+            {FEEDBACK.MSG2}.
+          </p>
         </Modal>
       )}
       <section className="birthday-list-cntr">
@@ -145,7 +189,10 @@ export const BirthdayListComp = () => {
                   }
                 >
                   <div>
-                    <img src={item.image} alt={`${item.name}'s profile`} />
+                    <img
+                      src={item.image || ProfilePicDefault}
+                      alt={`${item.name}'s profile`}
+                    />
                     {!state.showContent?.includes(item.id) && (
                       <>
                         <h3>{item.name}</h3>
@@ -167,9 +214,20 @@ export const BirthdayListComp = () => {
                         )} years old`}
                       </h5>
                       <h5 style={{ color }}>{computeDaysPending(item.dob)}</h5>
-                      <h5>{`Relationship: ${item.relation}`}</h5>
-                      {item.email && <p>{`Mail Id: ${item.email}`}</p>}
-                      {item.phoneNo && <p>{`Contact Info: ${item.phoneNo}`}</p>}
+                      {item.relation && (
+                        <h5>{`Relationship: ${item.relation}`}</h5>
+                      )}
+                      {item.phoneNo && (
+                        <h5 className="contact-info-icon">
+                          <Phone className="details-icon" /> {item.phoneNo}
+                        </h5>
+                      )}
+                      {item.email && (
+                        <h5 className="contact-info-icon">
+                          <Mail className="details-icon" />
+                          <a href={`mailto:${item.email}`}>{item.email}</a>
+                        </h5>
+                      )}
                     </div>
                   )}
                 </section>

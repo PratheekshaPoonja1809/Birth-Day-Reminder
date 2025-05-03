@@ -1,3 +1,9 @@
+import { createContext, useContext } from "react";
+
+export const SessionContext = createContext();
+
+export const useSession = () => useContext(SessionContext);
+
 export const DROPDOWN_OPTIONS = [
   "All",
   "Today",
@@ -16,6 +22,7 @@ export const INPUT_FORM_DATA = {
   dob: undefined,
   phoneNo: undefined,
   relationship: "",
+  image: '',
 };
 
 export const INITIAL_REDUCER_DATA = {
@@ -32,17 +39,17 @@ export const REDUCER_DATA = {
   SELECTED: "set_selected",
 };
 
-export const PROFILE_PIC_TEXT={
-  NEW:'Choose Profile Pic',
-  RENAME:'Replace Profile Pic'
-}
+export const PROFILE_PIC_TEXT = {
+  NEW: "Choose Profile Pic",
+  RENAME: "Replace Profile Pic",
+};
 
 export const DATE_TYPE = {
   MM: "MM",
   MMDD: "MM-DD",
   DDMMMYYYY: "DD MMM YYYY",
-  DAY:'day',
-  MONTH:'month'
+  DAY: "day",
+  MONTH: "month",
 };
 
 export const DATA = [
@@ -326,4 +333,31 @@ export const DATA = [
     phoneNo: null,
     image: "https://randomuser.me/api/portraits/men/18.jpg",
   },
+];
+
+export const FEEDBACK = {
+  MSG1: "Whether you enjoyed the app or see room for improvement, your input truly matters. Feel free to reach out via ",
+  MSG2: "I'd love to hear from you. Thanks so much for checking it out!",
+  MAIL: "mailto:prathee024@email.com",
+  LINKEDIN: "https://www.linkedin.com/in/pratheeksha-poonja-4a62a9bb/",
+};
+
+export const RELATION_TYPE = [
+  "Family",
+  "Friend",
+  "Colleague",
+  "Classmate",
+  "Neighbor",
+  "Partner",
+  "Spouse",
+  "Parent",
+  "Sibling",
+  "Child",
+  "Relative",
+  "Acquaintance",
+  "Celebrity",
+  "Mentor",
+  "Boss",
+  "Client",
+  "Others",
 ];

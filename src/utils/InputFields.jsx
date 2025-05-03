@@ -32,7 +32,7 @@ export const InputFields = (props) => {
           {props.label}
         </label>
       )}
-      {props.hasError && <small className="error">{props.hasError}</small>}
+      {props.haserror && <small className="error">{props.haserror}</small>}
     </div>
   );
 };
