@@ -16,7 +16,7 @@ export const Modal = ({ headerName, onClose, children }) => {
           />
           {showAlertMsg && <span className="session-msg">{WARN_MSG}</span>}
           <span>
-            <X onClick={() => onClose(false)} />
+            <X onClick={() => onClose(false)} className="close-modal"/>
           </span>
         </h2>
         <div className="card">{children}</div>

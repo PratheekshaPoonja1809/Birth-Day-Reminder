@@ -13,8 +13,9 @@ export const WARN_MSG =
 export const INPUT_FORM_DATA = {
   name: "",
   email: "",
-  dob: null,
-  phoneNo: null,
+  dob: undefined,
+  phoneNo: undefined,
+  relationship:''
 };
 export const DATA = [
   {

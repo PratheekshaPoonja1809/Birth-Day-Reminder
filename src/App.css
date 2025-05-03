@@ -198,13 +198,6 @@
   animation: slowDisplay 3s ease-out 1;
 }
 
-.alert-info {
-  stroke: red;
-  width: 19px;
-  margin: 0 1%;
-  cursor: pointer;
-}
-
 .modal-header {
   display: flex;
   place-items: center;
@@ -275,9 +268,11 @@
 }
 
 .input-field-section input{
-  padding: 8px;
+  padding: 10px;
   margin: 2px 2px 1%;
   width: 55%;
+  border-radius: 7px;
+  border: 1px solid #aaa;
 }
 
 
@@ -333,4 +328,36 @@
   width: 25%;
   margin: 2% 3%;
   outline: none;
+}
+
+.alert-info {
+  stroke: red;
+  width: 19px;
+  margin: 0 1%;
+  cursor: pointer;
+  animation: alert-bounce 1s ease infinite;
+}
+
+
+@keyframes alert-bounce {
+  0%,
+  50%,
+  100% {
+    transform: skewX(0deg);
+  }
+
+  25% {
+    transform: skewX(-15deg);
+  }
+
+  75% {
+    transform: skewX(15deg);
+  }
+}
+
+.close-modal {
+  cursor: pointer;
+  position: absolute;
+  right: 1%;
+  top: 2%;
 }

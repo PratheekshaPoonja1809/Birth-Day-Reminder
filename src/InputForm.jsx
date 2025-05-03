@@ -30,9 +30,37 @@ export const InputForm = () => {
     sessionStorage.removeItem("uploadedImage");
   };
 
-  const changeInputData = () => {};
+  const changeInputData = (e) => {
+    const { name, value } = e;
+    setErr((val) => ({ ...val, [name]: "" }));
+    if (name === "phoneNo") {
+      let x = value.replace(/\D/g, "").substring(0, 10);
+      if (x.length > 6) {
+        x = `${x.substring(0, 3)}-${x.substring(3, 6)}-${x.substring(6, 10)}`;
+      } else if (x.length > 3) {
+        x = `${x.substring(0, 3)}-${x.substring(3, 6)}`;
+      }
+      setInputs((val) => ({ ...val, [name]: x }));
+    } else {
+      setInputs((val) => ({ ...val, [name]: value }));
+    }
+  };
 
-  const handleBlur = () => {};
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    if (name === "name" && value.length <= 2)
+      setErr((err) => ({
+        ...err,
+        [name]: "! Minimum of 3 characters",
+      }));
+    if (name === "email" && !value.includes("@"))
+      setErr((err) => ({ ...err, [name]: "! Please enter valid email ID" }));
+    if (name === "phoneNo" && value.length <=11)
+      setErr((err) => ({
+        ...err,
+        [name]: "! Right format: 123-456-7890",
+      }));
+  };
 
   const isDisabledBtn = Object.values(err).some(
     (errMessage) => errMessage !== ""
@@ -80,42 +108,50 @@ export const InputForm = () => {
         <div className="form-inputs-container">
           <InputFields
             label="Name"
+            name="name"
             type="text"
             value={inputs.name}
             onChange={changeInputData}
-            handleBlur={handleBlur}
-            maxlength="20"
+            onBlur={handleBlur}
+            maxLength="20"
+            hasError={err.name}
           />
           <InputFields
             label="Mail Id"
             type="text"
-            value={inputs.name}
+            name="email"
+            value={inputs.email}
             onChange={changeInputData}
-            handleBlur={handleBlur}
-            maxlength="20"
+            onBlur={handleBlur}
+            maxLength="20"
+            hasError={err.email}
           />
           <InputFields
             label="DOB"
             type="date"
-            value={inputs.name}
+            name="dob"
+            value={inputs.dob}
             onChange={changeInputData}
-            handleBlur={handleBlur}
+            onBlur={handleBlur}
+            hasError={err.dob}
           />
           <InputFields
             label="Phone Number"
             type="tel"
-            pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
-            value={inputs.name}
+            name="phoneNo"
+            value={inputs.phoneNo}
             onChange={changeInputData}
-            handleBlur={handleBlur}
+            onBlur={handleBlur}
+            hasError={err.phoneNo}
           />
           <InputFields
             label="Relation"
             type="text"
-            value={inputs.name}
+            name="relationship"
+            value={inputs.relationship}
             onChange={changeInputData}
-            handleBlur={handleBlur}
-            maxlength="20"
+            onBlur={handleBlur}
+            maxLength="20"
           />
           <div>
             <Button

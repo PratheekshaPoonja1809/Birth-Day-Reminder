@@ -1,32 +1,20 @@
 import React, { useCallback, useEffect, useId, useState } from "react";
 import PropTypes from "prop-types";
 
-export const InputFields = ({
-  id,
-  label,
-  type,
-  value,
-  onChange,
-  placeholder,
-  name,
-  isDisabled,
-  maxLength,
-  required,
-  pattern,
-}) => {
+export const InputFields = (props) => {
   const generatedId = useId();
-  const inputId = id || generatedId;
+  const inputId = props.id || generatedId;
 
-  const [isFirstFocus, setIsFirstFocus] = useState(!!value);
+  const [isFirstFocus, setIsFirstFocus] = useState(!!props.value);
 
   const handleBlur = useCallback(() => {
-    setIsFirstFocus(!!value);
-  }, [value]);
+    setIsFirstFocus(!!props.value);
+  }, [props.value]);
 
   const inputChange = (e) => {
     const newValue = e.target;
     setIsFirstFocus(!!newValue.value);
-    onChange(newValue);
+    props.onChange(newValue);
   };
 
   useEffect(() => {
@@ -35,27 +23,16 @@ export const InputFields = ({
 
   return (
     <div className="input-field-section">
-      <input
-        id={inputId}
-        type={type}
-        value={value}
-        onBlur={handleBlur}
-        onChange={inputChange}
-        placeholder={placeholder}
-        name={name}
-        disabled={isDisabled}
-        maxLength={maxLength}
-        required={required}
-        pattern={pattern || undefined}
-      />
-      {label && (
+      <input {...props} onChange={inputChange} />
+      {props.label && (
         <label
           htmlFor={inputId}
           className={isFirstFocus ? "fix-focus-top" : ""}
         >
-          {label}
+          {props.label}
         </label>
       )}
+      {props.hasError && <small className="error">{props.hasError}</small>}
     </div>
   );
 };
