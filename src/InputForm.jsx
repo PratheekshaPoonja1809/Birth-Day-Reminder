@@ -75,6 +75,7 @@ export const InputForm = () => {
     e.preventDefault();
     alert(`Hello user ${inputs.name}. Your email id is ${inputs.email}`);
   };
+  
   return (
     <>
       <form onSubmit={submitForm} id="form-validate">

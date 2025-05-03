@@ -13,7 +13,7 @@ export const BirthdayListComp = () => {
   const [openModal, setOpenModal] = useState(false);
   const [dataSource, setDataSource] = useState([]);
   const [list, setList] = useState([]);
-  const [displayAns, setDisplayAns] = useState([]);
+  const [showContent, setShowContent] = useState([]);
 
   const loadSampleData = () => {
     if (!dataSource.length) setDataSource(DATA);
@@ -31,9 +31,9 @@ export const BirthdayListComp = () => {
   };
 
   const showCompleteDetail = (details) => {
-    displayAns.includes(details.id)
-      ? setDisplayAns([])
-      : setDisplayAns([details.id]);
+    showContent.includes(details.id)
+      ? setShowContent([])
+      : setShowContent([details.id]);
   };
 
   const timelineSelected = useCallback(() => {
@@ -62,7 +62,7 @@ export const BirthdayListComp = () => {
         break;
     }
 
-    setDisplayAns([]);
+    setShowContent([]);
 
     if (selected === OPTIONS[0]) {
       setList(dataSource);
@@ -114,19 +114,19 @@ export const BirthdayListComp = () => {
                   onClick={() => showCompleteDetail(item)}
                   style={{ cursor: "pointer" }}
                   className={
-                    displayAns?.includes(item.id) ? "full-details-section" : ""
+                    showContent?.includes(item.id) ? "full-details-section" : ""
                   }
                 >
                   <div>
                     <img src={item.image} alt={`${item.name}'s profile`} />
-                    {!displayAns?.includes(item.id) && (
+                    {!showContent?.includes(item.id) && (
                       <>
                         <h3>{item.name}</h3>
                         <p>{dayjs(item.dob).format("DD MMM YYYY")}</p>
                       </>
                     )}
                   </div>
-                  {displayAns?.includes(item.id) && (
+                  {showContent?.includes(item.id) && (
                     <div
                       className="grid-detail"
                       style={{ gridColumn: `0 / 4` }}
