@@ -41,6 +41,8 @@ export const DATE_TYPE = {
   MM: "MM",
   MMDD: "MM-DD",
   DDMMMYYYY: "DD MMM YYYY",
+  DAY:'day',
+  MONTH:'month'
 };
 
 export const DATA = [

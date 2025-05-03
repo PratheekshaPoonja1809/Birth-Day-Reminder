@@ -54,8 +54,10 @@ export const InputForm = () => {
         [name]: "! Minimum of 3 characters",
       }));
     if (name === "email" && !value.includes("@"))
-      setErr((err) => ({ ...err, [name]: "! Please enter valid email ID" }));
-    if (name === "phoneNo" && value.length <=11)
+      setErr((err) => ({ ...err, [name]: "! Invalid email ID" }));
+    if (name === "dob" && !value)
+      setErr((err) => ({ ...err, [name]: "! Invalid date of birth" }));
+    if (name === "phoneNo" && value.length <= 11)
       setErr((err) => ({
         ...err,
         [name]: "! Right format: 123-456-7890",
@@ -69,6 +71,7 @@ export const InputForm = () => {
   const resetForm = () => {
     setInputs(INPUT_FORM_DATA);
     setErr(INPUT_FORM_DATA);
+    console.log(inputs);
   };
 
   const submitForm = (e) => {
@@ -131,7 +134,7 @@ export const InputForm = () => {
             label="DOB"
             type="date"
             name="dob"
-            value={inputs.dob}
+            value={inputs.dob ?? ""}
             onChange={changeInputData}
             onBlur={handleBlur}
             hasError={err.dob}
@@ -140,7 +143,7 @@ export const InputForm = () => {
             label="Phone Number"
             type="tel"
             name="phoneNo"
-            value={inputs.phoneNo}
+            value={inputs.phoneNo ?? ""}
             onChange={changeInputData}
             onBlur={handleBlur}
             hasError={err.phoneNo}

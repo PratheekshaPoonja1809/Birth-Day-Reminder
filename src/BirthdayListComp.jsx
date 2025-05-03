@@ -68,18 +68,18 @@ export const BirthdayListComp = () => {
       case DROPDOWN_OPTIONS[2]:
         formatter = DATE_TYPE.MMDD;
         compareDate =
-          state.selected === DROPDOWN_OPTIONS[2] ? today.add(1, "day") : today;
+          state.selected === DROPDOWN_OPTIONS[2] ? today.add(1, DATE_TYPE.DAY) : today;
         break;
       case DROPDOWN_OPTIONS[3]:
         formatter = DATE_TYPE.MMDD;
-        compareDate = today.subtract(1, "day");
+        compareDate = today.subtract(1, DATE_TYPE.DAY);
         break;
       case DROPDOWN_OPTIONS[4]:
       case DROPDOWN_OPTIONS[5]:
         formatter = DATE_TYPE.MM;
         compareDate =
           state.selected === DROPDOWN_OPTIONS[5]
-            ? today.add(1, "month")
+            ? today.add(1, DATE_TYPE.MONTH)
             : today;
         break;
       default:
