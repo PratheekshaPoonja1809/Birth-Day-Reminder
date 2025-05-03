@@ -1,4 +1,4 @@
-export const OPTIONS = [
+export const DROPDOWN_OPTIONS = [
   "All",
   "Today",
   "Tomorrow",
@@ -15,8 +15,34 @@ export const INPUT_FORM_DATA = {
   email: "",
   dob: undefined,
   phoneNo: undefined,
-  relationship:''
+  relationship: "",
 };
+
+export const INITIAL_REDUCER_DATA = {
+  dataSource: [],
+  list: [],
+  showContent: [],
+  selected: DROPDOWN_OPTIONS[0],
+};
+
+export const REDUCER_DATA = {
+  DATA_SOURCE: "set_data_source",
+  LIST: "set_list",
+  SHOW_CONTENT: "set_show_content",
+  SELECTED: "set_selected",
+};
+
+export const PROFILE_PIC_TEXT={
+  NEW:'Choose Profile Pic',
+  RENAME:'Replace Profile Pic'
+}
+
+export const DATE_TYPE = {
+  MM: "MM",
+  MMDD: "MM-DD",
+  DDMMMYYYY: "DD MMM YYYY",
+};
+
 export const DATA = [
   {
     id: "C1",
@@ -282,7 +308,7 @@ export const DATA = [
     id: "C27",
     name: "Logan Bail Lerman",
     age: 34,
-    dob: "1991-05-01",
+    dob: "1991-05-04",
     relation: "Celebrity",
     email: null,
     phoneNo: null,

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { InputFields } from "./utils/InputFields";
-import { INPUT_FORM_DATA } from "./utils/Constants";
+import { INPUT_FORM_DATA, PROFILE_PIC_TEXT } from "./utils/Constants";
 import { X } from "react-feather";
 import { Button } from "./utils/Button";
 
@@ -75,7 +75,7 @@ export const InputForm = () => {
     e.preventDefault();
     alert(`Hello user ${inputs.name}. Your email id is ${inputs.email}`);
   };
-  
+
   return (
     <>
       <form onSubmit={submitForm} id="form-validate">
@@ -95,7 +95,7 @@ export const InputForm = () => {
             </>
           )}
           <label htmlFor="file-upload" className="custom-file-upload">
-            {image ? "Replace Profile Pic" : "Choose Profile Pic"}
+            {image ? PROFILE_PIC_TEXT.RENAME : PROFILE_PIC_TEXT.NEW}
           </label>
           <input
             type="file"

@@ -1,5 +1,11 @@
-import { Fragment, useCallback, useEffect, useState } from "react";
-import { DATA, OPTIONS } from "./utils/Constants";
+import { Fragment, useCallback, useEffect, useReducer, useState } from "react";
+import {
+  DATA,
+  DATE_TYPE,
+  INITIAL_REDUCER_DATA,
+  DROPDOWN_OPTIONS,
+  REDUCER_DATA,
+} from "./utils/Constants";
 import { Dropdown } from "./utils/Dropdown";
 import { Download, UserPlus } from "react-feather";
 import Tippy from "@tippyjs/react";
@@ -8,15 +14,29 @@ import { FilterDateFormatter, getDOB } from "./helper";
 import { Modal } from "./utils/Modal";
 import { InputForm } from "./InputForm";
 
+const reducerFn = (state, action) => {
+  switch (action.type) {
+    case REDUCER_DATA.DATA_SOURCE:
+      return { ...state, dataSource: action.payload };
+    case REDUCER_DATA.LIST:
+      return { ...state, list: action.payload };
+    case REDUCER_DATA.SHOW_CONTENT:
+      return { ...state, showContent: action.payload };
+    case REDUCER_DATA.SELECTED:
+      return { ...state, selected: action.payload };
+    default:
+      throw new Error(`Unknown action performed: ${action.type}`);
+  }
+};
+
 export const BirthdayListComp = () => {
-  const [selected, setSelected] = useState(OPTIONS[0]);
   const [openModal, setOpenModal] = useState(false);
-  const [dataSource, setDataSource] = useState([]);
-  const [list, setList] = useState([]);
-  const [showContent, setShowContent] = useState([]);
+
+  const [state, dispatch] = useReducer(reducerFn, INITIAL_REDUCER_DATA);
 
   const loadSampleData = () => {
-    if (!dataSource.length) setDataSource(DATA);
+    if (!state.dataSource.length)
+      dispatch({ type: REDUCER_DATA.DATA_SOURCE, payload: DATA });
   };
 
   const computeDaysPending = (date) => {
@@ -31,60 +51,66 @@ export const BirthdayListComp = () => {
   };
 
   const showCompleteDetail = (details) => {
-    showContent.includes(details.id)
-      ? setShowContent([])
-      : setShowContent([details.id]);
+    state.showContent.includes(details.id)
+      ? dispatch({ type: REDUCER_DATA.SHOW_CONTENT, payload: [] })
+      : dispatch({ type: REDUCER_DATA.SHOW_CONTENT, payload: [details.id] });
   };
 
   const timelineSelected = useCallback(() => {
-    if (!dataSource.length) return;
+    if (!state.dataSource.length) return;
 
     const today = dayjs();
     let formatter;
     let compareDate = today;
 
-    switch (selected) {
-      case OPTIONS[1]:
-      case OPTIONS[2]:
-        formatter = "MM-DD";
-        compareDate = selected === OPTIONS[2] ? today.add(1, "day") : today;
+    switch (state.selected) {
+      case DROPDOWN_OPTIONS[1]:
+      case DROPDOWN_OPTIONS[2]:
+        formatter = DATE_TYPE.MMDD;
+        compareDate =
+          state.selected === DROPDOWN_OPTIONS[2] ? today.add(1, "day") : today;
         break;
-      case OPTIONS[3]:
-        formatter = "MM-DD";
+      case DROPDOWN_OPTIONS[3]:
+        formatter = DATE_TYPE.MMDD;
         compareDate = today.subtract(1, "day");
         break;
-      case OPTIONS[4]:
-      case OPTIONS[5]:
-        formatter = "MM";
-        compareDate = selected === OPTIONS[4] ? today.add(1, "month") : today;
+      case DROPDOWN_OPTIONS[4]:
+      case DROPDOWN_OPTIONS[5]:
+        formatter = DATE_TYPE.MM;
+        compareDate =
+          state.selected === DROPDOWN_OPTIONS[5]
+            ? today.add(1, "month")
+            : today;
         break;
       default:
         break;
     }
 
-    setShowContent([]);
+    dispatch({ type: REDUCER_DATA.SHOW_CONTENT, payload: [] });
 
-    if (selected === OPTIONS[0]) {
-      setList(dataSource);
+    if (state.selected === DROPDOWN_OPTIONS[0]) {
+      dispatch({ type: REDUCER_DATA.LIST, payload: state.dataSource });
     } else {
-      const filtered = dataSource.filter((item) =>
+      const filtered = state.dataSource.filter((item) =>
         FilterDateFormatter(formatter, compareDate, dayjs(item.dob))
       );
-      setList(filtered);
+      dispatch({ type: REDUCER_DATA.LIST, payload: filtered });
     }
-  }, [selected, dataSource]);
+  }, [state.selected, state.dataSource]);
 
   useEffect(() => {
     timelineSelected();
-  }, [selected, timelineSelected]);
+  }, [state.selected, timelineSelected]);
 
   return (
     <main className="main-container">
       <Dropdown
-        options={OPTIONS}
+        options={DROPDOWN_OPTIONS}
         label="Who's Celebrating Soon?:"
-        selected={selected}
-        setSelected={setSelected}
+        selected={state.selected}
+        setSelected={(value) =>
+          dispatch({ type: REDUCER_DATA.SELECTED, payload: value })
+        }
       />
       <section className="menu-icons">
         <Tippy content="Add Contacts">
@@ -99,12 +125,11 @@ export const BirthdayListComp = () => {
           <InputForm />
         </Modal>
       )}
-      {/* {isLoading && <LoadingIndicator />} */}
       <section className="birthday-list-cntr">
-        {!list.length ? (
+        {!state.list.length ? (
           <p>No candles to blow out today</p>
         ) : (
-          list.map((item) => {
+          state.list.map((item) => {
             const daysLeft = getDOB(item.dob);
             const color =
               daysLeft === 0 ? "green" : daysLeft < 0 ? "gray" : "violet";
@@ -114,19 +139,21 @@ export const BirthdayListComp = () => {
                   onClick={() => showCompleteDetail(item)}
                   style={{ cursor: "pointer" }}
                   className={
-                    showContent?.includes(item.id) ? "full-details-section" : ""
+                    state.showContent?.includes(item.id)
+                      ? "full-details-section"
+                      : ""
                   }
                 >
                   <div>
                     <img src={item.image} alt={`${item.name}'s profile`} />
-                    {!showContent?.includes(item.id) && (
+                    {!state.showContent?.includes(item.id) && (
                       <>
                         <h3>{item.name}</h3>
-                        <p>{dayjs(item.dob).format("DD MMM YYYY")}</p>
+                        <p>{dayjs(item.dob).format(DATE_TYPE.DDMMMYYYY)}</p>
                       </>
                     )}
                   </div>
-                  {showContent?.includes(item.id) && (
+                  {state.showContent?.includes(item.id) && (
                     <div
                       className="grid-detail"
                       style={{ gridColumn: `0 / 4` }}
