@@ -5,9 +5,12 @@ import { Download, UserPlus } from "react-feather";
 import Tippy from "@tippyjs/react";
 import dayjs from "dayjs";
 import { FilterDateFormatter, getDOB } from "./helper";
+import { Modal } from "./utils/Modal";
+import { InputForm } from "./InputForm";
 
 export const BirthdayListComp = () => {
   const [selected, setSelected] = useState(OPTIONS[0]);
+  const [openModal, setOpenModal] = useState(false);
   const [dataSource, setDataSource] = useState([]);
   const [list, setList] = useState([]);
   const [displayAns, setDisplayAns] = useState([]);
@@ -85,12 +88,18 @@ export const BirthdayListComp = () => {
       />
       <section className="menu-icons">
         <Tippy content="Add Contacts">
-          <UserPlus />
+          <UserPlus onClick={() => setOpenModal(true)} />
         </Tippy>
         <Tippy content="Load Sample Data">
           <Download onClick={loadSampleData} />
         </Tippy>
       </section>
+      {openModal && (
+        <Modal headerName="Contact Update" onClose={setOpenModal}>
+          <InputForm />
+        </Modal>
+      )}
+      {/* {isLoading && <LoadingIndicator />} */}
       <section className="birthday-list-cntr">
         {!list.length ? (
           <p>No candles to blow out today</p>

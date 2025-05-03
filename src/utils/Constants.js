@@ -7,6 +7,15 @@ export const OPTIONS = [
   "Next month",
 ];
 
+export const WARN_MSG =
+  "Data is retained exclusively for the duration of the current session.";
+
+export const INPUT_FORM_DATA = {
+  name: "",
+  email: "",
+  dob: null,
+  phoneNo: null,
+};
 export const DATA = [
   {
     id: "C1",
