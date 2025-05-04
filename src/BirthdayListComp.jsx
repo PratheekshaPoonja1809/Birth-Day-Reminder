@@ -64,8 +64,6 @@ export const BirthdayListComp = () => {
   };
 
   const timelineSelected = useCallback(() => {
-    if (!state.dataSource.length) return;
-
     const today = dayjs();
     let formatter;
     let compareDate = today;
