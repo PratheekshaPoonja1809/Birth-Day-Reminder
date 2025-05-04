@@ -12,7 +12,12 @@ import { Dropdown } from "./utils/Dropdown";
 import { Download, Frown, Mail, Phone, Star, UserPlus } from "react-feather";
 import Tippy from "@tippyjs/react";
 import dayjs from "dayjs";
-import { FilterDateFormatter, getDOB, sendMail } from "./helper";
+import {
+  computeDaysPending,
+  FilterDateFormatter,
+  getDOB,
+  sendMail,
+} from "./helper";
 import { Modal } from "./utils/Modal";
 import { InputForm } from "./InputForm";
 import ProfilePicDefault from "./assets/picture.png";
@@ -47,19 +52,6 @@ export const BirthdayListComp = () => {
       dispatch({ type: REDUCER_DATA.DATA_SOURCE, payload: DATA });
   };
 
-  const computeDaysPending = (date, onlyDays) => {
-    const daysLeft = getDOB(date);
-    if (onlyDays) {
-      return daysLeft;
-    }
-    if (daysLeft > 0) {
-      return `⏳ ${daysLeft} day(s) to go`;
-    } else if (daysLeft === 0) {
-      return MESSAGES.CELEBRATE;
-    }
-    return `${Math.abs(daysLeft)} day(s) late to the party!`;
-  };
-
   const showCompleteDetail = (details) => {
     state.showContent.includes(details.id)
       ? dispatch({ type: REDUCER_DATA.SHOW_CONTENT, payload: [] })
@@ -77,6 +69,7 @@ export const BirthdayListComp = () => {
     const today = dayjs();
     let formatter;
     let compareDate = today;
+    const completeList = [...session, ...state.dataSource];
 
     switch (state.selected) {
       case DROPDOWN_OPTIONS[1]:
@@ -103,9 +96,6 @@ export const BirthdayListComp = () => {
         break;
     }
 
-    dispatch({ type: REDUCER_DATA.SHOW_CONTENT, payload: [] });
-    const completeList = [...session, ...state.dataSource];
-
     if (state.selected === DROPDOWN_OPTIONS[0]) {
       dispatch({
         type: REDUCER_DATA.LIST,
@@ -117,6 +107,8 @@ export const BirthdayListComp = () => {
       );
       dispatch({ type: REDUCER_DATA.LIST, payload: filtered });
     }
+
+    dispatch({ type: REDUCER_DATA.SHOW_CONTENT, payload: [] });
   }, [state.selected, state.dataSource, session]);
 
   useEffect(() => {
@@ -157,6 +149,7 @@ export const BirthdayListComp = () => {
           onClose={() => setFeedbackRequested(!isFeedbackRequested)}
           headerName={MESSAGES.FEEDBACK}
           width="35%"
+          minWidth="35%"
         >
           <FeedbackComponent />
         </Modal>

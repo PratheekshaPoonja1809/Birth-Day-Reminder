@@ -331,7 +331,7 @@ export const RELATION_TYPE = [
 ];
 
 export const MESSAGES = {
-  NO_BDAY_TONIGHT: "No candles to blow out tonight",
+  NO_BDAY_TONIGHT: "No candles to blow out ",
   BDAY_WISH: "Send birthday vibes",
   BELATED_WISH: "Send belated birthday wishes",
   FEEDBACK: "Share Your Thoughts",
