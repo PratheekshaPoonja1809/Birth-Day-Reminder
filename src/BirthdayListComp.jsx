@@ -214,8 +214,8 @@ export const BirthdayListComp = () => {
                         )} years old`}
                       </h5>
                       <h5 style={{ color }}>{computeDaysPending(item.dob)}</h5>
-                      {item.relation && (
-                        <h5>{`Relationship: ${item.relation}`}</h5>
+                      {item.relationship && (
+                        <h5>{`Relationship: ${item.relationship}`}</h5>
                       )}
                       {item.phoneNo && (
                         <h5 className="contact-info-icon">
@@ -225,7 +225,14 @@ export const BirthdayListComp = () => {
                       {item.email && (
                         <h5 className="contact-info-icon">
                           <Mail className="details-icon" />
-                          <a href={`mailto:${item.email}`}>{item.email}</a>
+                          <a
+                            href={`mailto:${item.email}`}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                            }}
+                          >
+                            {item.email}
+                          </a>
                         </h5>
                       )}
                     </div>

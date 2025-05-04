@@ -7,6 +7,7 @@ import {
 } from "./utils/Constants";
 import { X } from "react-feather";
 import { Button } from "./utils/Button";
+import { genrateUniqueID } from "./helper";
 
 export const InputForm = ({ onClose }) => {
   let [inputs, setInputs] = useState(INPUT_FORM_DATA);
@@ -22,7 +23,7 @@ export const InputForm = ({ onClose }) => {
         const base64Image = reader.result;
         setImage(base64Image);
         sessionStorage.setItem("uploadedImage", base64Image);
-        setInputs((val) => ({ ...val, "image": base64Image }));
+        setInputs((val) => ({ ...val, image: base64Image }));
       };
       reader.readAsDataURL(file);
     }
@@ -78,7 +79,8 @@ export const InputForm = ({ onClose }) => {
 
   const submitForm = (e) => {
     e.preventDefault();
-    setSession((prev) => [...prev, inputs]);
+    const generateID = { ...inputs, id: genrateUniqueID() };
+    setSession((prev) => [...prev, generateID]);
     onClose(false);
   };
 
