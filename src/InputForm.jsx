@@ -2,6 +2,7 @@ import { useState } from "react";
 import { InputFields } from "./utils/InputFields";
 import {
   INPUT_FORM_DATA,
+  MESSAGES,
   PROFILE_PIC_TEXT,
   useSession,
 } from "./utils/Constants";
@@ -55,16 +56,16 @@ export const InputForm = ({ onClose }) => {
     if (name === "name" && value.length <= 2)
       setErr((err) => ({
         ...err,
-        [name]: "! Minimum of 3 characters",
+        [name]: MESSAGES.ERR_NAME,
       }));
     if (name === "email" && !value.includes("@"))
-      setErr((err) => ({ ...err, [name]: "! Invalid email ID" }));
+      setErr((err) => ({ ...err, [name]: MESSAGES.ERR_MAIL }));
     if (name === "dob" && !value)
-      setErr((err) => ({ ...err, [name]: "! Invalid date of birth" }));
+      setErr((err) => ({ ...err, [name]: MESSAGES.ERR_DOB }));
     if (name === "phoneNo" && value.length <= 11)
       setErr((err) => ({
         ...err,
-        [name]: "! Right format: 123-456-7890",
+        [name]: MESSAGES.ERR_PHONENO,
       }));
   };
 

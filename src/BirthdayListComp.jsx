@@ -5,17 +5,19 @@ import {
   INITIAL_REDUCER_DATA,
   DROPDOWN_OPTIONS,
   REDUCER_DATA,
-  FEEDBACK,
   useSession,
+  MESSAGES,
 } from "./utils/Constants";
 import { Dropdown } from "./utils/Dropdown";
-import { Download, Linkedin, Mail, Phone, Star, UserPlus } from "react-feather";
+import { Download, Frown, Mail, Phone, Star, UserPlus } from "react-feather";
 import Tippy from "@tippyjs/react";
 import dayjs from "dayjs";
-import { FilterDateFormatter, getDOB } from "./helper";
+import { FilterDateFormatter, getDOB, sendMail } from "./helper";
 import { Modal } from "./utils/Modal";
 import { InputForm } from "./InputForm";
 import ProfilePicDefault from "./assets/picture.png";
+import Celebrate from "./assets/celebrate.png";
+import { FeedbackComponent } from "./FeedbackComponent";
 
 const reducerFn = (state, action) => {
   switch (action.type) {
@@ -45,13 +47,15 @@ export const BirthdayListComp = () => {
       dispatch({ type: REDUCER_DATA.DATA_SOURCE, payload: DATA });
   };
 
-  const computeDaysPending = (date) => {
+  const computeDaysPending = (date, onlyDays) => {
     const daysLeft = getDOB(date);
-
+    if (onlyDays) {
+      return daysLeft;
+    }
     if (daysLeft > 0) {
       return `⏳ ${daysLeft} day(s) to go`;
     } else if (daysLeft === 0) {
-      return "It's celebration time!";
+      return MESSAGES.CELEBRATE;
     }
     return `${Math.abs(daysLeft)} day(s) late to the party!`;
   };
@@ -60,6 +64,11 @@ export const BirthdayListComp = () => {
     state.showContent.includes(details.id)
       ? dispatch({ type: REDUCER_DATA.SHOW_CONTENT, payload: [] })
       : dispatch({ type: REDUCER_DATA.SHOW_CONTENT, payload: [details.id] });
+  };
+
+  const sendBirthdayCard = (item, e) => {
+    e.stopPropagation();
+    sendMail(item);
   };
 
   const timelineSelected = useCallback(() => {
@@ -95,17 +104,18 @@ export const BirthdayListComp = () => {
     }
 
     dispatch({ type: REDUCER_DATA.SHOW_CONTENT, payload: [] });
+    const completeList = [...session, ...state.dataSource];
 
     if (state.selected === DROPDOWN_OPTIONS[0]) {
       dispatch({
         type: REDUCER_DATA.LIST,
-        payload: [...session, ...state.dataSource],
+        payload: completeList,
       });
     } else {
-      const filtered = state.dataSource.filter((item) =>
+      const filtered = completeList.filter((item) =>
         FilterDateFormatter(formatter, compareDate, dayjs(item.dob))
       );
-      dispatch({ type: REDUCER_DATA.LIST, payload: [...session, ...filtered] });
+      dispatch({ type: REDUCER_DATA.LIST, payload: filtered });
     }
   }, [state.selected, state.dataSource, session]);
 
@@ -117,7 +127,7 @@ export const BirthdayListComp = () => {
     <main className="main-container">
       <Dropdown
         options={DROPDOWN_OPTIONS}
-        label="Who's Celebrating Soon?:"
+        label={MESSAGES.DROPDOWM_MSG}
         selected={state.selected}
         setSelected={(value) =>
           dispatch({ type: REDUCER_DATA.SELECTED, payload: value })
@@ -130,7 +140,7 @@ export const BirthdayListComp = () => {
         <Tippy content="Load Sample Data">
           <Download onClick={loadSampleData} />
         </Tippy>
-        <Tippy content="Give us your thoughts">
+        <Tippy content={MESSAGES.FEEDBACK}>
           <Star
             className="menu-option "
             onClick={() => setFeedbackRequested(!isFeedbackRequested)}
@@ -145,33 +155,24 @@ export const BirthdayListComp = () => {
       {isFeedbackRequested && (
         <Modal
           onClose={() => setFeedbackRequested(!isFeedbackRequested)}
-          headerName="Share Your Thoughts"
+          headerName={MESSAGES.FEEDBACK}
           width="35%"
         >
-          <p className="feedback-para">
-            {FEEDBACK.MSG1}
-            <a href={FEEDBACK.MAIL}>
-              <Tippy content="Get in touch via email">
-                <Mail width="35px" />
-              </Tippy>
-            </a>{" "}
-            or{" "}
-            <a
-              href={FEEDBACK.LINKEDIN}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Tippy content="Connect with me on LinkedIn">
-                <Linkedin width="35px" />
-              </Tippy>
-            </a>
-            {FEEDBACK.MSG2}.
-          </p>
+          <FeedbackComponent />
         </Modal>
       )}
       <section className="birthday-list-cntr">
         {!state.list.length ? (
-          <p>No candles to blow out today</p>
+          <h3
+            style={{
+              color: "orange",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            {MESSAGES.NO_BDAY_TONIGHT} <Frown />
+          </h3>
         ) : (
           state.list.map((item) => {
             const daysLeft = getDOB(item.dob);
@@ -181,7 +182,7 @@ export const BirthdayListComp = () => {
               <Fragment key={item.id}>
                 <section
                   onClick={() => showCompleteDetail(item)}
-                  style={{ cursor: "pointer" }}
+                  style={{ cursor: "pointer", position: "relative" }}
                   className={
                     state.showContent?.includes(item.id)
                       ? "full-details-section"
@@ -189,6 +190,23 @@ export const BirthdayListComp = () => {
                   }
                 >
                   <div>
+                    {computeDaysPending(item.dob, true) <= 7 &&
+                      computeDaysPending(item.dob, true) >= -7 && (
+                        <Tippy
+                          content={
+                            computeDaysPending(item.dob, true) < 0
+                              ? MESSAGES.BELATED_WISH
+                              : MESSAGES.BDAY_WISH
+                          }
+                        >
+                          <img
+                            src={Celebrate}
+                            alt={Celebrate}
+                            className="celebrate-icon"
+                            onClick={(e) => sendBirthdayCard(item, e)}
+                          />
+                        </Tippy>
+                      )}
                     <img
                       src={item.image || ProfilePicDefault}
                       alt={`${item.name}'s profile`}

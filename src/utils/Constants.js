@@ -13,17 +13,14 @@ export const DROPDOWN_OPTIONS = [
   "Next month",
 ];
 
-export const WARN_MSG =
-  "Data is retained exclusively for the duration of the current session.";
-
 export const INPUT_FORM_DATA = {
-  id:'',
+  id: "",
   name: "",
   email: "",
   dob: undefined,
   phoneNo: undefined,
   relationship: "",
-  image: '',
+  image: "",
 };
 
 export const INITIAL_REDUCER_DATA = {
@@ -304,36 +301,6 @@ export const DATA = [
     phoneNo: null,
     image: "https://randomuser.me/api/portraits/men/15.jpg",
   },
-  {
-    id: "C26",
-    name: "Tomer Hanks",
-    age: 33,
-    dob: "1992-05-02",
-    relation: "Celebrity",
-    email: null,
-    phoneNo: null,
-    image: "https://randomuser.me/api/portraits/men/16.jpg",
-  },
-  {
-    id: "C27",
-    name: "Logan Bail Lerman",
-    age: 34,
-    dob: "1991-05-04",
-    relation: "Celebrity",
-    email: null,
-    phoneNo: null,
-    image: "https://randomuser.me/api/portraits/men/17.jpg",
-  },
-  {
-    id: "C28",
-    name: "Bail Timmy",
-    age: 34,
-    dob: "1991-05-03",
-    relation: "Celebrity",
-    email: null,
-    phoneNo: null,
-    image: "https://randomuser.me/api/portraits/men/18.jpg",
-  },
 ];
 
 export const FEEDBACK = {
@@ -362,3 +329,33 @@ export const RELATION_TYPE = [
   "Client",
   "Others",
 ];
+
+export const MESSAGES = {
+  NO_BDAY_TONIGHT: "No candles to blow out tonight",
+  BDAY_WISH: "Send birthday vibes",
+  BELATED_WISH: "Send belated birthday wishes",
+  FEEDBACK: "Share Your Thoughts",
+  DROPDOWM_MSG: "Who's Celebrating Soon?:",
+  CELEBRATE: "It's celebration time!",
+  LINKEDIN_CONNECT: "Connect with me on LinkedIn",
+  MAIL_CONNECT: "Get in touch via email",
+  WARN_MSG:
+    "Data is retained exclusively for the duration of the current session.",
+  ERR_NAME: "! Minimum of 3 characters",
+  ERR_MAIL: "! Invalid email ID",
+  ERR_DOB: "! Invalid date of birth",
+  ERR_PHONENO: "! Right format: 123-456-7890",
+  CELEBRATE_MSG: "It's Your Special Day - Celebrate Big!",
+  BIRTHDAY_WISHES:
+    "Wishing you a very happy birthday today! May your day be filled with love, laughter, and all the things that make you smile. Cheers to another amazing year!",
+  BELATED_WISHES:
+    "Better late than never! Wishing you all the joy and success you deserve this year. Happy belated birthday!",
+  ADVANCE_WISHES:
+    "I'm sending you my best wishes ahead of time because I want you to have the best celebration before it even starts. I hope your year ahead is as spectacular as you!",
+};
+
+export const BIRTHDAY_TIME = {
+  TODAY: "Today",
+  BELATED: "Belated",
+  Advanced: "Advanced",
+};

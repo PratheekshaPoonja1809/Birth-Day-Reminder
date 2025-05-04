@@ -154,6 +154,7 @@
   justify-content: center;
   align-items: center;
   background-color: rgb(126 122 122 / 70%);
+  z-index: 111;
 }
 
 .portal-overlay {
@@ -375,4 +376,13 @@
   width: 18px;
   height: 18px;
   color: #950995;
+}
+
+.birthday-list-cntr .celebrate-icon {
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  left: 20px;
+  top: 10px;
+  transform: scale(1);
 }

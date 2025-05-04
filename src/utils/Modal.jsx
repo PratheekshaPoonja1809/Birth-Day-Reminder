@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { createPortal } from "react-dom";
 import { Bell, X } from "react-feather";
-import { WARN_MSG } from "./Constants";
+import { MESSAGES } from "./Constants";
 
 export const Modal = ({ headerName, onClose, children, alert, width }) => {
   const [showAlertMsg, setAlertMsg] = useState(false);
@@ -16,7 +16,7 @@ export const Modal = ({ headerName, onClose, children, alert, width }) => {
               onClick={() => setAlertMsg(!showAlertMsg)}
             />
           )}
-          {showAlertMsg && <span className="session-msg">{WARN_MSG}</span>}
+          {showAlertMsg && <span className="session-msg">{MESSAGES.WARN_MSG}</span>}
           <span>
             <X onClick={() => onClose(false)} className="close-modal" />
           </span>

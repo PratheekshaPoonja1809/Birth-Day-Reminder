@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { DATE_TYPE } from "./utils/Constants";
+import { DATE_TYPE, MESSAGES } from "./utils/Constants";
 
 export const FilterDateFormatter = (formatter, compareDate, bDay) => {
   return compareDate.format(formatter) === bDay.format(formatter);
@@ -19,4 +19,24 @@ export const getDOB = (date) => {
 export const genrateUniqueID = () => {
   const uniqueId = `id-${Date.now()}${Math.random().toString().slice(2, 8)}`;
   return uniqueId;
+};
+
+export const sendMail = (detail) => {
+  const daysLeft = getDOB(detail.dob);
+  const message =
+    daysLeft < 0
+      ? MESSAGES.BELATED_WISHES
+      : daysLeft > 0
+      ? MESSAGES.ADVANCE_WISHES
+      : MESSAGES.BIRTHDAY_WISHES;
+
+  const subject = encodeURIComponent(MESSAGES.CELEBRATE_MSG);
+  const body = encodeURIComponent(`Hi ${detail.name},
+
+    ${message}
+
+    Cheers!
+  `);
+
+  window.location.href = `mailto:${detail?.email??''}?subject=${subject}&body=${body}`;
 };
