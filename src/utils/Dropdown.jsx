@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronDown, ChevronUp } from "react-feather";
+import { LazyLoadIcons } from "./LazyLoadIcons";
 
 export const Dropdown = ({ label, options,selected, setSelected }) => {
   const [open, setOpen] = useState(false);
@@ -15,7 +15,12 @@ export const Dropdown = ({ label, options,selected, setSelected }) => {
       <div className="dropdown-header" onClick={() => setOpen(!open)}>
         {selected}{" "}
         <span className="arrow-dropdown">
-          {open ? <ChevronUp /> : <ChevronDown />}
+          {open ? <LazyLoadIcons
+                name="chevron_up"
+              />:
+              <LazyLoadIcons
+                name="chevron_down"
+              />}
         </span>
       </div>
       {open && (

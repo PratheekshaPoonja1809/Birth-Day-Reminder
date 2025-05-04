@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { createPortal } from "react-dom";
-import { Bell, X } from "react-feather";
 import { MESSAGES } from "./Constants";
+import { LazyLoadIcons } from "./LazyLoadIcons";
 
 export const Modal = ({
   headerName,
@@ -12,7 +12,7 @@ export const Modal = ({
   minWidth,
 }) => {
   const [showAlertMsg, setAlertMsg] = useState(false);
-  
+
   return createPortal(
     <div className="transparent-overlay">
       <div
@@ -22,7 +22,8 @@ export const Modal = ({
         <h2 className="modal-header">
           {headerName}{" "}
           {alert && (
-            <Bell
+            <LazyLoadIcons
+              name="bell"
               className="alert-info"
               onClick={() => setAlertMsg(!showAlertMsg)}
             />
@@ -31,7 +32,11 @@ export const Modal = ({
             <span className="session-msg">{MESSAGES.WARN_MSG}</span>
           )}
           <span>
-            <X onClick={() => onClose(false)} className="close-modal" />
+            <LazyLoadIcons
+              name="close"
+              onClick={() => onClose(false)}
+              className="close-modal"
+            />
           </span>
         </h2>
         <div className="card">{children}</div>

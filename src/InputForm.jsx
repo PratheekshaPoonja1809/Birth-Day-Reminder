@@ -6,9 +6,9 @@ import {
   PROFILE_PIC_TEXT,
   useSession,
 } from "./utils/Constants";
-import { X } from "react-feather";
 import { Button } from "./utils/Button";
 import { genrateUniqueID } from "./helper";
+import { LazyLoadIcons } from "./utils/LazyLoadIcons";
 
 export const InputForm = ({ onClose }) => {
   let [inputs, setInputs] = useState(INPUT_FORM_DATA);
@@ -96,7 +96,8 @@ export const InputForm = ({ onClose }) => {
                 alt="ProfilePicture"
                 className="profile_picture"
               />
-              <X
+              <LazyLoadIcons
+                name="close"
                 onClick={clearImage}
                 className="close-profile-pic"
                 title="Close"

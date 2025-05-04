@@ -9,7 +9,6 @@ import {
   MESSAGES,
 } from "./utils/Constants";
 import { Dropdown } from "./utils/Dropdown";
-import { Download, Frown, Mail, Phone, Star, UserPlus } from "react-feather";
 import Tippy from "@tippyjs/react";
 import dayjs from "dayjs";
 import {
@@ -23,6 +22,7 @@ import { InputForm } from "./InputForm";
 import ProfilePicDefault from "./assets/picture.png";
 import Celebrate from "./assets/celebrate.png";
 import { FeedbackComponent } from "./FeedbackComponent";
+import { LazyLoadIcons } from "./utils/LazyLoadIcons";
 
 const reducerFn = (state, action) => {
   switch (action.type) {
@@ -126,18 +126,24 @@ export const BirthdayListComp = () => {
         }
       />
       <section className="menu-icons">
-        <Tippy content="Add Contacts">
-          <UserPlus onClick={() => setOpenModal(true)} />
-        </Tippy>
-        <Tippy content="Load Sample Data">
-          <Download onClick={loadSampleData} />
-        </Tippy>
-        <Tippy content={MESSAGES.FEEDBACK}>
-          <Star
-            className="menu-option "
-            onClick={() => setFeedbackRequested(!isFeedbackRequested)}
-          />
-        </Tippy>
+        <LazyLoadIcons
+          name="user"
+          className="menu-option "
+          content={MESSAGES.ADD_CONTACTS}
+          onClick={() => setOpenModal(true)}
+        />
+        <LazyLoadIcons
+          name="download"
+          className="menu-option "
+          content={MESSAGES.LOAD_SAMPLE_DATA}
+          onClick={loadSampleData}
+        />
+        <LazyLoadIcons
+          name="star"
+          className="menu-option "
+          content={MESSAGES.FEEDBACK}
+          onClick={() => setFeedbackRequested(!isFeedbackRequested)}
+        />
       </section>
       {openModal && (
         <Modal headerName="Contact Update" onClose={setOpenModal} alert={true}>
@@ -164,7 +170,7 @@ export const BirthdayListComp = () => {
               justifyContent: "center",
             }}
           >
-            {MESSAGES.NO_BDAY_TONIGHT} <Frown />
+            {MESSAGES.NO_BDAY_TONIGHT} <LazyLoadIcons name="frown" />
           </h3>
         ) : (
           state.list.map((item) => {
@@ -230,12 +236,16 @@ export const BirthdayListComp = () => {
                       )}
                       {item.phoneNo && (
                         <h5 className="contact-info-icon">
-                          <Phone className="details-icon" /> {item.phoneNo}
+                          <LazyLoadIcons
+                            name="phone"
+                            className="details-icon"
+                          />
+                          {item.phoneNo}
                         </h5>
                       )}
                       {item.email && (
                         <h5 className="contact-info-icon">
-                          <Mail className="details-icon" />
+                          <LazyLoadIcons name="mail" className="details-icon" />
                           <a
                             href={`mailto:${item.email}`}
                             onClick={(e) => {

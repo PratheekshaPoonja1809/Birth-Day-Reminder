@@ -1,21 +1,24 @@
-import Tippy from "@tippyjs/react";
 import { FEEDBACK, MESSAGES } from "./utils/Constants";
-import { Linkedin, Mail } from "react-feather";
+import { LazyLoadIcons } from "./utils/LazyLoadIcons";
 
 export const FeedbackComponent = () => {
   return (
     <p className="feedback-para">
       {FEEDBACK.MSG1}
       <a href={FEEDBACK.MAIL}>
-        <Tippy content={MESSAGES.MAIL_CONNECT}>
-          <Mail width="35px" />
-        </Tippy>
+        <LazyLoadIcons
+          name="mail"
+          content={MESSAGES.MAIL_CONNECT}
+          width="35px"
+        />
       </a>{" "}
       or{" "}
       <a href={FEEDBACK.LINKEDIN} target="_blank" rel="noopener noreferrer">
-        <Tippy content={MESSAGES.LINKEDIN_CONNECT}>
-          <Linkedin width="35px" />
-        </Tippy>
+        <LazyLoadIcons
+          name="linkedIn"
+          content={MESSAGES.LINKEDIN_CONNECT}
+          width="35px"
+        />
       </a>
       {FEEDBACK.MSG2}.
     </p>
