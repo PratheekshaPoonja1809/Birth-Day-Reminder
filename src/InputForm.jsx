@@ -85,6 +85,12 @@ export const InputForm = ({ onClose }) => {
     onClose(false);
   };
 
+  const getStyles = (showDOB) => {
+    return {
+      color: showDOB ? "#000" : "transparent",
+    };
+  };
+  
   return (
     <>
       <form onSubmit={submitForm} id="form-validate">
@@ -145,6 +151,7 @@ export const InputForm = ({ onClose }) => {
             onChange={changeInputData}
             onBlur={handleBlur}
             haserror={err.dob}
+            style={getStyles(inputs.dob)}
           />
           <InputFields
             label="Phone Number"

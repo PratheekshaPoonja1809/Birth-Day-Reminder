@@ -275,6 +275,10 @@
   width: 55%;
   border-radius: 7px;
   border: 1px solid #aaa;
+  z-index: 11;
+  position: relative;
+  background-color: transparent;
+
 }
 
 .input-field-section label {
@@ -303,6 +307,7 @@
   color: rgb(14 145 102);
   background-color: white;
   font-style: italic;
+  z-index: 12;
 }
 
 .input-field-section input:focus+label::after,
@@ -391,6 +396,7 @@
   .portal-overlay {
     min-width: 87%;
   }
+
   .birthday-list-cntr {
     grid-template-columns: repeat(auto-fit, minmax(295px, 1fr));
   }
@@ -400,6 +406,7 @@
   .portal-overlay {
     min-width: 70%;
   }
+
   .birthday-list-cntr {
     grid-template-columns: repeat(auto-fit, minmax(295px, 1fr));
   }
@@ -410,4 +417,3 @@
     min-width: 70%;
   }
 }
-
