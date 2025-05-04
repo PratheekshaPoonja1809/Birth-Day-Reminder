@@ -152,6 +152,7 @@ export const InputForm = ({ onClose }) => {
             onBlur={handleBlur}
             haserror={err.dob}
             style={getStyles(inputs.dob)}
+            max={new Date().toISOString().split("T")[0]}
           />
           <InputFields
             label="Phone Number"
