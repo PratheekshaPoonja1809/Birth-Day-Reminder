@@ -134,7 +134,7 @@
 .birthday-list-cntr .full-details-section {
   width: 80%;
   grid-column: span 2;
-  max-width: none;
+  max-width: 600px;
   display: flex;
   justify-content: space-around;
   align-items: center;
