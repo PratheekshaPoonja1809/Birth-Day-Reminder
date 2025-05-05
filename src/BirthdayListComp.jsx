@@ -192,11 +192,11 @@ export const BirthdayListComp = () => {
                   }
                 >
                   <div>
-                    {computeDaysPending(item.dob, true) <= 7 &&
-                      computeDaysPending(item.dob, true) >= -7 && (
+                    {daysLeft <= 7 &&
+                      daysLeft >= -7 && (
                         <Tippy
                           content={
-                            computeDaysPending(item.dob, true) < 0
+                            daysLeft < 0
                               ? MESSAGES.BELATED_WISH
                               : MESSAGES.BDAY_WISH
                           }

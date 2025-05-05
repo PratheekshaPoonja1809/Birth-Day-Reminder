@@ -21,11 +21,8 @@ export const genrateUniqueID = () => {
   return uniqueId;
 };
 
-export const computeDaysPending = (date, onlyDays) => {
+export const computeDaysPending = (date) => {
   const daysLeft = getDOB(date);
-  if (onlyDays) {
-    return daysLeft;
-  }
   if (daysLeft > 0) {
     return `⏳ ${daysLeft} day(s) to go`;
   } else if (daysLeft === 0) {
