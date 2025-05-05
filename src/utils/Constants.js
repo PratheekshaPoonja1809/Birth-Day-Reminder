@@ -1,5 +1,19 @@
 import { createContext, useContext } from "react";
-import { Bell, ChevronDown, ChevronUp, Download, Frown, Linkedin, Mail, Phone, Star,  UserPlus, X } from "react-feather";
+import {
+  Bell,
+  ChevronDown,
+  ChevronUp,
+  Download,
+  FileMinus,
+  FilePlus,
+  Frown,
+  Linkedin,
+  Mail,
+  Phone,
+  Star,
+  UserPlus,
+  X,
+} from "react-feather";
 
 export const SessionContext = createContext();
 
@@ -10,13 +24,15 @@ export const FeatherIcons = {
   user: UserPlus,
   download: Download,
   mail: Mail,
-  phone:Phone,
-  frown:Frown,
-  linkedIn:Linkedin,
-  close:X,
-  bell:Bell,
-  chevron_up:ChevronUp,
-  chevron_down:ChevronDown
+  phone: Phone,
+  frown: Frown,
+  linkedIn: Linkedin,
+  close: X,
+  bell: Bell,
+  chevron_up: ChevronUp,
+  chevron_down: ChevronDown,
+  file_plus:FilePlus,
+  file_minus:FileMinus
 };
 
 export const DROPDOWN_OPTIONS = [
@@ -354,8 +370,9 @@ export const MESSAGES = {
   CELEBRATE: "It's celebration time!",
   LINKEDIN_CONNECT: "Connect with me on LinkedIn",
   MAIL_CONNECT: "Get in touch via email",
-  ADD_CONTACTS:'Add Contacts',
-  LOAD_SAMPLE_DATA:'Load Sample Data',
+  ADD_CONTACTS: "Add Contacts",
+  LOAD_SAMPLE_DATA: "Load Sample Data",
+  REMOVE_SAMPLE_DATA: "Remove Sample Data",
   WARN_MSG:
     "Data is retained exclusively for the duration of the current session.",
   ERR_NAME: "! Minimum of 3 characters",

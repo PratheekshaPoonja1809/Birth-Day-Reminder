@@ -50,6 +50,7 @@ export const BirthdayListComp = () => {
   const loadSampleData = () => {
     if (!state.dataSource.length)
       dispatch({ type: REDUCER_DATA.DATA_SOURCE, payload: DATA });
+    else dispatch({ type: REDUCER_DATA.DATA_SOURCE, payload: [] });
   };
 
   const showCompleteDetail = (details) => {
@@ -131,9 +132,13 @@ export const BirthdayListComp = () => {
           onClick={() => setOpenModal(true)}
         />
         <LazyLoadIcons
-          name="download"
+          name={!state.dataSource.length ? "file_plus" : "file_minus"}
           className="menu-option "
-          content={MESSAGES.LOAD_SAMPLE_DATA}
+          content={
+            !state.dataSource.length
+              ? MESSAGES.LOAD_SAMPLE_DATA
+              : MESSAGES.REMOVE_SAMPLE_DATA
+          }
           onClick={loadSampleData}
         />
         <LazyLoadIcons
