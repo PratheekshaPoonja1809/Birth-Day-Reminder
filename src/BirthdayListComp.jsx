@@ -34,6 +34,8 @@ const reducerFn = (state, action) => {
       return { ...state, showContent: action.payload };
     case REDUCER_DATA.SELECTED:
       return { ...state, selected: action.payload };
+    case REDUCER_DATA.MEMBER_DETAIL:
+      return { ...state, memberDetails: action.payload };
     default:
       throw new Error(`Unknown action performed: ${action.type}`);
   }
@@ -62,6 +64,19 @@ export const BirthdayListComp = () => {
   const sendBirthdayCard = (item, e) => {
     e.stopPropagation();
     sendMail(item);
+  };
+
+  const updateDetails = (e, item = null) => {
+    e.stopPropagation();
+    const userDetail = item ?? "";
+    dispatch({ type: REDUCER_DATA.MEMBER_DETAIL, payload: userDetail });
+    setOpenModal(true);
+  };
+
+  const deleteDetails = (e, detail) => {
+    e.stopPropagation();
+    const filtered = state.list.filter((item) => item.id !== detail.id);
+    dispatch({ type: REDUCER_DATA.LIST, payload: filtered });
   };
 
   const timelineSelected = useCallback(() => {
@@ -129,7 +144,7 @@ export const BirthdayListComp = () => {
           name="user"
           className="menu-option "
           content={MESSAGES.ADD_CONTACTS}
-          onClick={() => setOpenModal(true)}
+          onClick={updateDetails}
         />
         <LazyLoadIcons
           name={!state.dataSource.length ? "file_plus" : "file_minus"}
@@ -150,7 +165,7 @@ export const BirthdayListComp = () => {
       </section>
       {openModal && (
         <Modal headerName="Contact Update" onClose={setOpenModal} alert={true}>
-          <InputForm onClose={setOpenModal} />
+          <InputForm onClose={setOpenModal} data={state.memberDetails} />
         </Modal>
       )}
       {isFeedbackRequested && (
@@ -192,8 +207,7 @@ export const BirthdayListComp = () => {
                   }
                 >
                   <div>
-                    {daysLeft <= 7 &&
-                      daysLeft >= -7 && (
+                      {daysLeft <= 7 && daysLeft >= -7 && (
                         <Tippy
                           content={
                             daysLeft < 0
@@ -213,6 +227,22 @@ export const BirthdayListComp = () => {
                       src={item.image || ProfilePicDefault}
                       alt={`${item.name}'s profile`}
                     />
+                    {state.showContent?.includes(item.id)  && !item.id?.startsWith('Sample') &&(
+                      <>
+                        <LazyLoadIcons
+                          name="trash"
+                          className="delete-icon "
+                          content="Delete"
+                          onClick={(e) => deleteDetails(e, item)}
+                        />
+                        <LazyLoadIcons
+                          name="edit"
+                          className="edit-icon "
+                          content="Edit"
+                          onClick={(e) => updateDetails(e, item)}
+                        />
+                      </>
+                    )}
                     {!state.showContent?.includes(item.id) && (
                       <>
                         <h3>{item.name}</h3>

@@ -10,10 +10,12 @@ import { Button } from "./utils/Button";
 import { genrateUniqueID } from "./helper";
 import { LazyLoadIcons } from "./utils/LazyLoadIcons";
 
-export const InputForm = ({ onClose }) => {
-  let [inputs, setInputs] = useState(INPUT_FORM_DATA);
+export const InputForm = ({ onClose, data = {} }) => {
+  let [inputs, setInputs] = useState(data ?? INPUT_FORM_DATA);
   let [err, setErr] = useState(INPUT_FORM_DATA);
-  const [image, setImage] = useState();
+  const [image, setImage] = useState(
+    data ? sessionStorage.getItem("uploadedImage") : null
+  );
   const { setSession } = useSession();
 
   const handleFileChange = (e) => {
@@ -33,6 +35,7 @@ export const InputForm = ({ onClose }) => {
   const clearImage = () => {
     setImage(null);
     sessionStorage.removeItem("uploadedImage");
+    setInputs((val) => ({ ...val, image: '' }));
   };
 
   const changeInputData = (e) => {
@@ -80,8 +83,16 @@ export const InputForm = ({ onClose }) => {
 
   const submitForm = (e) => {
     e.preventDefault();
-    const generateID = { ...inputs, id: genrateUniqueID() };
-    setSession((prev) => [...prev, generateID]);
+    if (Object.keys(data).length === 0) {
+      const generateID = { ...inputs, id: genrateUniqueID() };
+      setSession((prev) => [...prev, generateID]);
+    } else {
+      setSession((prev) =>
+        prev.map((item) =>
+          item.id === data.id ? { ...item, ...inputs } : item
+        )
+      );
+    }
     onClose(false);
   };
 
@@ -90,7 +101,7 @@ export const InputForm = ({ onClose }) => {
       color: showDOB ? "#000" : "transparent",
     };
   };
-  
+
   return (
     <>
       <form onSubmit={submitForm} id="form-validate">
@@ -176,7 +187,7 @@ export const InputForm = ({ onClose }) => {
             <Button
               type="submit"
               text="Submit"
-              disabled={isDisabledBtn}
+              disabled={Object.keys(data).length === 0 && isDisabledBtn}
               className="profile-details-button"
             />
             <Button

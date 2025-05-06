@@ -4,6 +4,7 @@ import {
   ChevronDown,
   ChevronUp,
   Download,
+  Edit2,
   FileMinus,
   FilePlus,
   Frown,
@@ -11,6 +12,7 @@ import {
   Mail,
   Phone,
   Star,
+  Trash,
   UserPlus,
   X,
 } from "react-feather";
@@ -32,7 +34,9 @@ export const FeatherIcons = {
   chevron_up: ChevronUp,
   chevron_down: ChevronDown,
   file_plus:FilePlus,
-  file_minus:FileMinus
+  file_minus:FileMinus,
+  edit:Edit2,
+  trash: Trash
 };
 
 export const DROPDOWN_OPTIONS = [
@@ -59,6 +63,7 @@ export const INITIAL_REDUCER_DATA = {
   list: [],
   showContent: [],
   selected: DROPDOWN_OPTIONS[0],
+  memberDetails:{}
 };
 
 export const REDUCER_DATA = {
@@ -66,6 +71,7 @@ export const REDUCER_DATA = {
   LIST: "set_list",
   SHOW_CONTENT: "set_show_content",
   SELECTED: "set_selected",
+  MEMBER_DETAIL:'set_member_details'
 };
 
 export const PROFILE_PIC_TEXT = {
@@ -83,7 +89,7 @@ export const DATE_TYPE = {
 
 export const DATA = [
   {
-    id: "C1",
+    id: "Sample1",
     name: "Zendaya",
     age: 27,
     dob: "1996-09-01",
@@ -93,7 +99,7 @@ export const DATA = [
     image: "https://randomuser.me/api/portraits/women/44.jpg",
   },
   {
-    id: "C2",
+    id: "Sample2",
     name: "Timothée Chalamet",
     age: 28,
     dob: "1995-12-27",
@@ -103,7 +109,7 @@ export const DATA = [
     image: "https://randomuser.me/api/portraits/men/22.jpg",
   },
   {
-    id: "C3",
+    id: "Sample3",
     name: "Emma Watson",
     age: 34,
     dob: "1990-04-15",
@@ -113,7 +119,7 @@ export const DATA = [
     image: "https://randomuser.me/api/portraits/women/55.jpg",
   },
   {
-    id: "C4",
+    id: "Sample4",
     name: "Tom Holland",
     age: 28,
     dob: "1996-06-01",
@@ -123,7 +129,7 @@ export const DATA = [
     image: "https://randomuser.me/api/portraits/men/33.jpg",
   },
   {
-    id: "C5",
+    id: "Sample5",
     name: "Ariana Grande",
     age: 31,
     dob: "1993-06-26",
@@ -133,7 +139,7 @@ export const DATA = [
     image: "https://randomuser.me/api/portraits/women/12.jpg",
   },
   {
-    id: "C6",
+    id: "Sample6",
     name: "Chris Evans",
     age: 43,
     dob: "1981-06-13",
@@ -143,7 +149,7 @@ export const DATA = [
     image: "https://randomuser.me/api/portraits/men/20.jpg",
   },
   {
-    id: "C7",
+    id: "Sample7",
     name: "Taylor Swift",
     age: 35,
     dob: "1989-12-13",
@@ -153,7 +159,7 @@ export const DATA = [
     image: "https://randomuser.me/api/portraits/women/40.jpg",
   },
   {
-    id: "C8",
+    id: "Sample8",
     name: "Robert Pattinson",
     age: 38,
     dob: "1986-05-13",
@@ -163,7 +169,7 @@ export const DATA = [
     image: "https://randomuser.me/api/portraits/men/18.jpg",
   },
   {
-    id: "C9",
+    id: "Sample9",
     name: "Selena Gomez",
     age: 32,
     dob: "1992-07-22",
@@ -173,7 +179,7 @@ export const DATA = [
     image: "https://randomuser.me/api/portraits/women/32.jpg",
   },
   {
-    id: "C10",
+    id: "Sample10",
     name: "Dylan O'Brien",
     age: 33,
     dob: "1991-08-26",
@@ -183,7 +189,7 @@ export const DATA = [
     image: "https://randomuser.me/api/portraits/men/30.jpg",
   },
   {
-    id: "C11",
+    id: "Sample11",
     name: "Natalie Portman",
     age: 43,
     dob: "1981-06-09",
@@ -193,7 +199,7 @@ export const DATA = [
     image: "https://randomuser.me/api/portraits/women/60.jpg",
   },
   {
-    id: "C12",
+    id: "Sample12",
     name: "Ryan Reynolds",
     age: 48,
     dob: "1976-10-23",
@@ -203,7 +209,7 @@ export const DATA = [
     image: "https://randomuser.me/api/portraits/men/10.jpg",
   },
   {
-    id: "C13",
+    id: "Sample13",
     name: "Florence Pugh",
     age: 29,
     dob: "1996-01-03",
@@ -213,7 +219,7 @@ export const DATA = [
     image: "https://randomuser.me/api/portraits/women/15.jpg",
   },
   {
-    id: "C14",
+    id: "Sample14",
     name: "Millie Bobby Brown",
     age: 21,
     dob: "2004-02-19",
@@ -223,7 +229,7 @@ export const DATA = [
     image: "https://randomuser.me/api/portraits/women/19.jpg",
   },
   {
-    id: "C15",
+    id: "Sample15",
     name: "Finn Wolfhard",
     age: 22,
     dob: "2002-12-23",
@@ -233,7 +239,7 @@ export const DATA = [
     image: "https://randomuser.me/api/portraits/men/24.jpg",
   },
   {
-    id: "C16",
+    id: "Sample16",
     name: "Gal Gadot",
     age: 40,
     dob: "1985-04-30",
@@ -243,7 +249,7 @@ export const DATA = [
     image: "https://randomuser.me/api/portraits/women/48.jpg",
   },
   {
-    id: "C17",
+    id: "Sample17",
     name: "Jake Gyllenhaal",
     age: 44,
     dob: "1980-12-19",
@@ -253,7 +259,7 @@ export const DATA = [
     image: "https://randomuser.me/api/portraits/men/38.jpg",
   },
   {
-    id: "C18",
+    id: "Sample18",
     name: "Margot Robbie",
     age: 35,
     dob: "1990-07-02",
@@ -263,7 +269,7 @@ export const DATA = [
     image: "https://randomuser.me/api/portraits/women/5.jpg",
   },
   {
-    id: "C19",
+    id: "Sample19",
     name: "Henry Cavill",
     age: 42,
     dob: "1983-05-05",
@@ -273,7 +279,7 @@ export const DATA = [
     image: "https://randomuser.me/api/portraits/men/39.jpg",
   },
   {
-    id: "C20",
+    id: "Sample20",
     name: "Hailee Steinfeld",
     age: 28,
     dob: "1996-12-11",
@@ -283,7 +289,7 @@ export const DATA = [
     image: "https://randomuser.me/api/portraits/women/25.jpg",
   },
   {
-    id: "C21",
+    id: "Sample21",
     name: "Noah Centineo",
     age: 28,
     dob: "1996-05-09",
@@ -293,7 +299,7 @@ export const DATA = [
     image: "https://randomuser.me/api/portraits/men/7.jpg",
   },
   {
-    id: "C22",
+    id: "Sample22",
     name: "Saoirse Ronan",
     age: 31,
     dob: "1994-04-12",
@@ -303,7 +309,7 @@ export const DATA = [
     image: "https://randomuser.me/api/portraits/women/39.jpg",
   },
   {
-    id: "C23",
+    id: "Sample23",
     name: "Joe Keery",
     age: 33,
     dob: "1992-04-24",
@@ -313,7 +319,7 @@ export const DATA = [
     image: "https://randomuser.me/api/portraits/men/13.jpg",
   },
   {
-    id: "C24",
+    id: "Sample24",
     name: "Lily Collins",
     age: 36,
     dob: "1989-03-18",
@@ -323,7 +329,7 @@ export const DATA = [
     image: "https://randomuser.me/api/portraits/women/36.jpg",
   },
   {
-    id: "C25",
+    id: "Sample25",
     name: "Logan Lerman",
     age: 33,
     dob: "1992-01-19",
