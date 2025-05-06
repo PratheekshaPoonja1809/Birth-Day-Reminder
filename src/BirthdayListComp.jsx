@@ -26,15 +26,15 @@ import { LazyLoadIcons } from "./utils/LazyLoadIcons";
 
 const reducerFn = (state, action) => {
   switch (action.type) {
-    case REDUCER_DATA.DATA_SOURCE:
+    case REDUCER_DATA.DATA_SOURCE: //To store Sample Data
       return { ...state, dataSource: action.payload };
-    case REDUCER_DATA.LIST:
+    case REDUCER_DATA.LIST: //To store Sample & real time data
       return { ...state, list: action.payload };
-    case REDUCER_DATA.SHOW_CONTENT:
+    case REDUCER_DATA.SHOW_CONTENT: //To show the details of particular item when clicked
       return { ...state, showContent: action.payload };
-    case REDUCER_DATA.SELECTED:
+    case REDUCER_DATA.SELECTED: //Selection made on the dropdown
       return { ...state, selected: action.payload };
-    case REDUCER_DATA.MEMBER_DETAIL:
+    case REDUCER_DATA.MEMBER_DETAIL: //Editable Member's detail to send to popup
       return { ...state, memberDetails: action.payload };
     default:
       throw new Error(`Unknown action performed: ${action.type}`);
@@ -47,7 +47,7 @@ export const BirthdayListComp = () => {
 
   const [state, dispatch] = useReducer(reducerFn, INITIAL_REDUCER_DATA);
 
-  const { session } = useSession();
+  const { session ,setSession} = useSession();
 
   const loadSampleData = () => {
     if (!state.dataSource.length)
@@ -75,8 +75,7 @@ export const BirthdayListComp = () => {
 
   const deleteDetails = (e, detail) => {
     e.stopPropagation();
-    const filtered = state.list.filter((item) => item.id !== detail.id);
-    dispatch({ type: REDUCER_DATA.LIST, payload: filtered });
+    setSession((prev) => prev.filter((item) => item.id !== detail.id));
   };
 
   const timelineSelected = useCallback(() => {
