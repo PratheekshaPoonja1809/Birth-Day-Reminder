@@ -228,6 +228,10 @@
   }
 }
 
+.feedback-para{
+  text-align: center;
+}
+
 .profile-details-pic {
   width: 35%;
   display: inline-flex;

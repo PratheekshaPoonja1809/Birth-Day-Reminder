@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { LazyLoadIcons } from "./LazyLoadIcons";
+import useClickOutside from "./useClickOutside";
 
-export const Dropdown = ({ label, options,selected, setSelected }) => {
-  const [open, setOpen] = useState(false);
+export const Dropdown = ({ label, options, selected, setSelected }) => {
+  const boxRef = useRef(null);
+  const [isOpen, setOpen] = useState(false);
+
+  useClickOutside(boxRef, () => setOpen(false));
 
   const handleSelect = (option) => {
     setSelected(option);
@@ -10,20 +14,19 @@ export const Dropdown = ({ label, options,selected, setSelected }) => {
   };
 
   return (
-    <div className="dropdown">
+    <div className="dropdown" ref={boxRef}>
       {label && <label>{label}</label>}
-      <div className="dropdown-header" onClick={() => setOpen(!open)}>
+      <div className="dropdown-header" onClick={() => setOpen(!isOpen)}>
         {selected}{" "}
         <span className="arrow-dropdown">
-          {open ? <LazyLoadIcons
-                name="chevron_up"
-              />:
-              <LazyLoadIcons
-                name="chevron_down"
-              />}
+          {isOpen ? (
+            <LazyLoadIcons name="chevron_up" />
+          ) : (
+            <LazyLoadIcons name="chevron_down" />
+          )}
         </span>
       </div>
-      {open && (
+      {isOpen && (
         <ul className="dropdown-list">
           {options.map((opt, i) => (
             <li key={i} onClick={() => handleSelect(opt)}>

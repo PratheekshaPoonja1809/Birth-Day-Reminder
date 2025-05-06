@@ -127,7 +127,7 @@ export const BirthdayListComp = () => {
   useEffect(() => {
     timelineSelected();
   }, [state.selected, timelineSelected, session]);
-
+  
   return (
     <main className="main-container">
       <Dropdown
@@ -171,8 +171,8 @@ export const BirthdayListComp = () => {
         <Modal
           onClose={() => setFeedbackRequested(!isFeedbackRequested)}
           headerName={MESSAGES.FEEDBACK}
-          width="35%"
-          minWidth="35%"
+          width="40%"
+          minWidth="40%"
         >
           <FeedbackComponent />
         </Modal>
