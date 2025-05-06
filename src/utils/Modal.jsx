@@ -34,7 +34,7 @@ export const Modal = ({
           <span>
             <LazyLoadIcons
               name="close"
-              onClick={() => onClose(false)}
+              onClick={onClose}
               className="close-modal"
             />
           </span>

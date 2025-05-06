@@ -42,9 +42,13 @@ const reducerFn = (state, action) => {
 };
 
 export const BirthdayListComp = () => {
-  const [openModal, setOpenModal] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [isFeedbackRequested, setFeedbackRequested] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
+
+  const [uiState, setUiState] = useState({
+    isModalOpen: false,
+    isExpanded: false,
+    isFeedbackRequested: false,
+  });
 
   const [state, dispatch] = useReducer(reducerFn, INITIAL_REDUCER_DATA);
 
@@ -71,7 +75,7 @@ export const BirthdayListComp = () => {
     e.stopPropagation();
     const userDetail = item ?? "";
     dispatch({ type: REDUCER_DATA.MEMBER_DETAIL, payload: userDetail });
-    setOpenModal(true);
+    setUiState((prev) => ({ ...prev, isModalOpen: true }));
   };
 
   const deleteDetails = (e, detail) => {
@@ -83,7 +87,10 @@ export const BirthdayListComp = () => {
     const today = dayjs();
     let formatter;
     let compareDate = today;
-    const completeList = [...session, ...state.dataSource];
+
+    const completeList = [...session, ...state.dataSource].filter((item) =>
+      item.name.toUpperCase().includes(searchInput.toUpperCase())
+    );
 
     switch (state.selected) {
       case DROPDOWN_OPTIONS[1]:
@@ -123,11 +130,19 @@ export const BirthdayListComp = () => {
     }
 
     dispatch({ type: REDUCER_DATA.SHOW_CONTENT, payload: [] });
-  }, [state.selected, state.dataSource, session]);
+  }, [state.selected, state.dataSource, session, searchInput]);
+
+  const searchByName = useCallback((e) => {
+    setSearchInput(e.target.value);
+  }, []);
 
   useEffect(() => {
-    timelineSelected();
-  }, [state.selected, timelineSelected, session]);
+    const timeout = setTimeout(() => {
+      timelineSelected();
+    }, 0);
+
+    return () => clearTimeout(timeout);
+  }, [state.selected, session, searchInput, timelineSelected]);
 
   return (
     <main className="main-container">
@@ -143,14 +158,18 @@ export const BirthdayListComp = () => {
         <div className="search-container">
           <input
             type="text"
+            value={searchInput}
+            onChange={searchByName}
             placeholder="Search..."
-            className={`search-input ${isExpanded ? "expanded" : ""}`}
+            className={`search-input ${uiState.isExpanded ? "expanded" : ""}`}
           />
           <LazyLoadIcons
             name="search"
             className="search-btn"
             content={"Search"}
-            onClick={() => setIsExpanded((prev) => !prev)}
+            onClick={() =>
+              setUiState((prev) => ({ ...prev, isExpanded: !prev.isExpanded }))
+            }
           />
         </div>
         <LazyLoadIcons
@@ -173,17 +192,38 @@ export const BirthdayListComp = () => {
           name="star"
           className="menu-option "
           content={MESSAGES.FEEDBACK}
-          onClick={() => setFeedbackRequested(!isFeedbackRequested)}
+          onClick={() =>
+            setUiState((prev) => ({
+              ...prev,
+              isFeedbackRequested: !uiState.isFeedbackRequested,
+            }))
+          }
         />
       </section>
-      {openModal && (
-        <Modal headerName="Contact Update" onClose={setOpenModal} alert={true}>
-          <InputForm onClose={setOpenModal} data={state.memberDetails} />
+      {uiState.isModalOpen && (
+        <Modal
+          headerName="Contact Update"
+          onClose={() =>
+            setUiState((prev) => ({ ...prev, isModalOpen: false }))
+          }
+          alert={true}
+        >
+          <InputForm
+            onClose={() =>
+              setUiState((prev) => ({ ...prev, isModalOpen: false }))
+            }
+            data={state.memberDetails}
+          />
         </Modal>
       )}
-      {isFeedbackRequested && (
+      {uiState.isFeedbackRequested && (
         <Modal
-          onClose={() => setFeedbackRequested(!isFeedbackRequested)}
+          onClose={() =>
+            setUiState((prev) => ({
+              ...prev,
+              isFeedbackRequested: !uiState.isFeedbackRequested,
+            }))
+          }
           headerName={MESSAGES.FEEDBACK}
           width="40%"
           minWidth="40%"
