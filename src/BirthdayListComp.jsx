@@ -156,26 +156,30 @@ export const BirthdayListComp = () => {
           }
         />
         <section className="menu-icons">
-          <div className="search-container">
-            <input
-              type="text"
-              value={searchInput}
-              onChange={searchByName}
-              placeholder="Search..."
-              className={`search-input ${uiState.isExpanded ? "expanded" : ""}`}
-            />
-            <LazyLoadIcons
-              name="search"
-              className="search-btn"
-              content={"Search"}
-              onClick={() =>
-                setUiState((prev) => ({
-                  ...prev,
-                  isExpanded: !prev.isExpanded,
-                }))
-              }
-            />
-          </div>
+          {state.list.length!==0 && (
+            <div className="search-container">
+              <input
+                type="text"
+                value={searchInput}
+                onChange={searchByName}
+                placeholder="Search..."
+                className={`search-input ${
+                  uiState.isExpanded ? "expanded" : ""
+                }`}
+              />
+              <LazyLoadIcons
+                name="search"
+                className="search-btn"
+                content={"Search"}
+                onClick={() =>
+                  setUiState((prev) => ({
+                    ...prev,
+                    isExpanded: !prev.isExpanded,
+                  }))
+                }
+              />
+            </div>
+          )}
           <LazyLoadIcons
             name="user"
             className="menu-option "
