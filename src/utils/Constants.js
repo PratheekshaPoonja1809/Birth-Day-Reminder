@@ -11,6 +11,7 @@ import {
   Linkedin,
   Mail,
   Phone,
+  Search,
   Star,
   Trash,
   UserPlus,
@@ -36,7 +37,8 @@ export const FeatherIcons = {
   file_plus:FilePlus,
   file_minus:FileMinus,
   edit:Edit2,
-  trash: Trash
+  trash: Trash,
+  search: Search
 };
 
 export const DROPDOWN_OPTIONS = [

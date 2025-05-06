@@ -89,6 +89,9 @@
 
 .menu-icons {
   float: right;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .menu-icons>* {
@@ -228,7 +231,7 @@
   }
 }
 
-.feedback-para{
+.feedback-para {
   text-align: center;
 }
 
@@ -340,6 +343,24 @@
   outline: none;
 }
 
+.birthday-list-cntr .celebrate-today {
+  border: 2px solid transparent;
+  background-image: linear-gradient(white, white), linear-gradient(90deg, #8b18cd, #cd5616, #5cc8dc, #f00);
+  background-clip: padding-box, border-box;
+  animation: borderMove 3s linear infinite;
+  background-size: 200% 100%;
+}
+
+@keyframes borderMove {
+  0% {
+    background-position: 0% 0%;
+  }
+
+  100% {
+    background-position: 200% 0%;
+  }
+}
+
 .alert-info {
   stroke: red;
   width: 19px;
@@ -347,7 +368,6 @@
   cursor: pointer;
   animation: alert-bounce 1s ease infinite;
 }
-
 
 @keyframes alert-bounce {
 
@@ -364,6 +384,39 @@
   75% {
     transform: skewX(15deg);
   }
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.search-btn {
+  cursor: pointer;
+  padding: 0.5rem;
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+}
+
+.search-input {
+  width: 0;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  opacity: 0;
+  transition: width 0.4s ease, opacity 0.3s ease;
+  margin-left: 0.5rem;
+  outline: none;
+}
+
+.search-input.expanded {
+  width: 200px;
+  opacity: 1;
+}
+.search-input:focus{
+  border-color: violet;
 }
 
 .close-modal {

@@ -43,11 +43,12 @@ const reducerFn = (state, action) => {
 
 export const BirthdayListComp = () => {
   const [openModal, setOpenModal] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [isFeedbackRequested, setFeedbackRequested] = useState(false);
 
   const [state, dispatch] = useReducer(reducerFn, INITIAL_REDUCER_DATA);
 
-  const { session ,setSession} = useSession();
+  const { session, setSession } = useSession();
 
   const loadSampleData = () => {
     if (!state.dataSource.length)
@@ -127,7 +128,7 @@ export const BirthdayListComp = () => {
   useEffect(() => {
     timelineSelected();
   }, [state.selected, timelineSelected, session]);
-  
+
   return (
     <main className="main-container">
       <Dropdown
@@ -139,6 +140,19 @@ export const BirthdayListComp = () => {
         }
       />
       <section className="menu-icons">
+        <div className="search-container">
+          <input
+            type="text"
+            placeholder="Search..."
+            className={`search-input ${isExpanded ? "expanded" : ""}`}
+          />
+          <LazyLoadIcons
+            name="search"
+            className="search-btn"
+            content={"Search"}
+            onClick={() => setIsExpanded((prev) => !prev)}
+          />
+        </div>
         <LazyLoadIcons
           name="user"
           className="menu-option "
@@ -199,49 +213,50 @@ export const BirthdayListComp = () => {
                 <section
                   onClick={() => showCompleteDetail(item)}
                   style={{ cursor: "pointer", position: "relative" }}
-                  className={
+                  className={`${
                     state.showContent?.includes(item.id)
                       ? "full-details-section"
                       : ""
-                  }
+                  } ${daysLeft === 0 ? "celebrate-today" : ""}`}
                 >
                   <div>
-                      {daysLeft <= 7 && daysLeft >= -7 && (
-                        <Tippy
-                          content={
-                            daysLeft < 0
-                              ? MESSAGES.BELATED_WISH
-                              : MESSAGES.BDAY_WISH
-                          }
-                        >
-                          <img
-                            src={Celebrate}
-                            alt={Celebrate}
-                            className="celebrate-icon"
-                            onClick={(e) => sendBirthdayCard(item, e)}
-                          />
-                        </Tippy>
-                      )}
+                    {daysLeft <= 7 && daysLeft >= -7 && (
+                      <Tippy
+                        content={
+                          daysLeft < 0
+                            ? MESSAGES.BELATED_WISH
+                            : MESSAGES.BDAY_WISH
+                        }
+                      >
+                        <img
+                          src={Celebrate}
+                          alt={Celebrate}
+                          className="celebrate-icon"
+                          onClick={(e) => sendBirthdayCard(item, e)}
+                        />
+                      </Tippy>
+                    )}
                     <img
                       src={item.image || ProfilePicDefault}
                       alt={`${item.name}'s profile`}
                     />
-                    {state.showContent?.includes(item.id)  && !item.id?.startsWith('Sample') &&(
-                      <>
-                        <LazyLoadIcons
-                          name="trash"
-                          className="delete-icon "
-                          content="Delete"
-                          onClick={(e) => deleteDetails(e, item)}
-                        />
-                        <LazyLoadIcons
-                          name="edit"
-                          className="edit-icon "
-                          content="Edit"
-                          onClick={(e) => updateDetails(e, item)}
-                        />
-                      </>
-                    )}
+                    {state.showContent?.includes(item.id) &&
+                      !item.id?.startsWith("Sample") && (
+                        <>
+                          <LazyLoadIcons
+                            name="trash"
+                            className="delete-icon "
+                            content="Delete"
+                            onClick={(e) => deleteDetails(e, item)}
+                          />
+                          <LazyLoadIcons
+                            name="edit"
+                            className="edit-icon "
+                            content="Edit"
+                            onClick={(e) => updateDetails(e, item)}
+                          />
+                        </>
+                      )}
                     {!state.showContent?.includes(item.id) && (
                       <>
                         <h3>{item.name}</h3>

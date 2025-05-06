@@ -41,7 +41,10 @@ export const InputForm = ({ onClose, data = {} }) => {
   const changeInputData = (e) => {
     const { name, value } = e;
     setErr((val) => ({ ...val, [name]: "" }));
-    if (name === "phoneNo") {
+    if (name === "name") {
+      const inpName = value.replace(/[^a-zA-Z\s'-.]/g, '');
+      setInputs((val) => ({ ...val, [name]: inpName }));
+    } else if (name === "phoneNo") {
       let x = value.replace(/\D/g, "").substring(0, 10);
       if (x.length > 6) {
         x = `${x.substring(0, 3)}-${x.substring(3, 6)}-${x.substring(6, 10)}`;
@@ -61,7 +64,7 @@ export const InputForm = ({ onClose, data = {} }) => {
         ...err,
         [name]: MESSAGES.ERR_NAME,
       }));
-    if (name === "email" && !value.includes("@"))
+    if (name === "email" && !(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)))
       setErr((err) => ({ ...err, [name]: MESSAGES.ERR_MAIL }));
     if (name === "dob" && !value)
       setErr((err) => ({ ...err, [name]: MESSAGES.ERR_DOB }));
