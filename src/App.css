@@ -51,15 +51,21 @@
   border-radius: 6px;
   cursor: pointer;
   background-color: #f9f9f9;
-  width: 30%;
+  width: 32%;
   margin: 5px;
+}
+
+.menu-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .dropdown-list {
   position: absolute;
   top: 70%;
-  width: 44%;
-  right: 2%;
+  width: 38%;
+  right: 8%;
   border: 1px solid #ccc;
   border-radius: 6px;
   background: white;
@@ -115,6 +121,7 @@
   transition: transform 0.7s, box-shadow 0.7s;
   height: 150px;
   width: 150px;
+  max-width: 75%;
 }
 
 .birthday-list-cntr section {
@@ -344,7 +351,7 @@
 }
 
 .birthday-list-cntr .celebrate-today {
-  border: 2px solid transparent;
+  border: 3px solid transparent;
   background-image: linear-gradient(white, white), linear-gradient(90deg, #8b18cd, #cd5616, #5cc8dc, #f00);
   background-clip: padding-box, border-box;
   animation: borderMove 3s linear infinite;
@@ -415,7 +422,8 @@
   width: 200px;
   opacity: 1;
 }
-.search-input:focus{
+
+.search-input:focus {
   border-color: violet;
 }
 

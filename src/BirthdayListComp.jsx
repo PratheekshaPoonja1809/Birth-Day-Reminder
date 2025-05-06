@@ -146,60 +146,65 @@ export const BirthdayListComp = () => {
 
   return (
     <main className="main-container">
-      <Dropdown
-        options={DROPDOWN_OPTIONS}
-        label={MESSAGES.DROPDOWM_MSG}
-        selected={state.selected}
-        setSelected={(value) =>
-          dispatch({ type: REDUCER_DATA.SELECTED, payload: value })
-        }
-      />
-      <section className="menu-icons">
-        <div className="search-container">
-          <input
-            type="text"
-            value={searchInput}
-            onChange={searchByName}
-            placeholder="Search..."
-            className={`search-input ${uiState.isExpanded ? "expanded" : ""}`}
+      <div className="menu-container">
+        <Dropdown
+          options={DROPDOWN_OPTIONS}
+          label={MESSAGES.DROPDOWM_MSG}
+          selected={state.selected}
+          setSelected={(value) =>
+            dispatch({ type: REDUCER_DATA.SELECTED, payload: value })
+          }
+        />
+        <section className="menu-icons">
+          <div className="search-container">
+            <input
+              type="text"
+              value={searchInput}
+              onChange={searchByName}
+              placeholder="Search..."
+              className={`search-input ${uiState.isExpanded ? "expanded" : ""}`}
+            />
+            <LazyLoadIcons
+              name="search"
+              className="search-btn"
+              content={"Search"}
+              onClick={() =>
+                setUiState((prev) => ({
+                  ...prev,
+                  isExpanded: !prev.isExpanded,
+                }))
+              }
+            />
+          </div>
+          <LazyLoadIcons
+            name="user"
+            className="menu-option "
+            content={MESSAGES.ADD_CONTACTS}
+            onClick={updateDetails}
           />
           <LazyLoadIcons
-            name="search"
-            className="search-btn"
-            content={"Search"}
+            name={!state.dataSource.length ? "file_plus" : "file_minus"}
+            className="menu-option "
+            content={
+              !state.dataSource.length
+                ? MESSAGES.LOAD_SAMPLE_DATA
+                : MESSAGES.REMOVE_SAMPLE_DATA
+            }
+            onClick={loadSampleData}
+          />
+          <LazyLoadIcons
+            name="star"
+            className="menu-option "
+            content={MESSAGES.FEEDBACK}
             onClick={() =>
-              setUiState((prev) => ({ ...prev, isExpanded: !prev.isExpanded }))
+              setUiState((prev) => ({
+                ...prev,
+                isFeedbackRequested: !uiState.isFeedbackRequested,
+              }))
             }
           />
-        </div>
-        <LazyLoadIcons
-          name="user"
-          className="menu-option "
-          content={MESSAGES.ADD_CONTACTS}
-          onClick={updateDetails}
-        />
-        <LazyLoadIcons
-          name={!state.dataSource.length ? "file_plus" : "file_minus"}
-          className="menu-option "
-          content={
-            !state.dataSource.length
-              ? MESSAGES.LOAD_SAMPLE_DATA
-              : MESSAGES.REMOVE_SAMPLE_DATA
-          }
-          onClick={loadSampleData}
-        />
-        <LazyLoadIcons
-          name="star"
-          className="menu-option "
-          content={MESSAGES.FEEDBACK}
-          onClick={() =>
-            setUiState((prev) => ({
-              ...prev,
-              isFeedbackRequested: !uiState.isFeedbackRequested,
-            }))
-          }
-        />
-      </section>
+        </section>
+      </div>
       {uiState.isModalOpen && (
         <Modal
           headerName="Contact Update"
