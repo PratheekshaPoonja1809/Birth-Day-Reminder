@@ -1,4 +1,10 @@
-import { Fragment, useCallback, useEffect, useReducer, useState } from "react";
+import {
+  Fragment,
+  useCallback,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
 import {
   DATA,
   DATE_TYPE,
@@ -83,6 +89,10 @@ export const BirthdayListComp = () => {
     setSession((prev) => prev.filter((item) => item.id !== detail.id));
   };
 
+  const searchByName = useCallback((e) => {
+    setSearchInput(e.target.value);
+  }, []);
+
   const timelineSelected = useCallback(() => {
     const today = dayjs();
     let formatter;
@@ -132,10 +142,6 @@ export const BirthdayListComp = () => {
     dispatch({ type: REDUCER_DATA.SHOW_CONTENT, payload: [] });
   }, [state.selected, state.dataSource, session, searchInput]);
 
-  const searchByName = useCallback((e) => {
-    setSearchInput(e.target.value);
-  }, []);
-
   useEffect(() => {
     const timeout = setTimeout(() => {
       timelineSelected();
@@ -156,30 +162,26 @@ export const BirthdayListComp = () => {
           }
         />
         <section className="menu-icons">
-          {state.list.length!==0 && (
-            <div className="search-container">
-              <input
-                type="text"
-                value={searchInput}
-                onChange={searchByName}
-                placeholder="Search..."
-                className={`search-input ${
-                  uiState.isExpanded ? "expanded" : ""
-                }`}
-              />
-              <LazyLoadIcons
-                name="search"
-                className="search-btn"
-                content={"Search"}
-                onClick={() =>
-                  setUiState((prev) => ({
-                    ...prev,
-                    isExpanded: !prev.isExpanded,
-                  }))
-                }
-              />
-            </div>
-          )}
+          <div className="search-container">
+            <input
+              type="text"
+              value={searchInput}
+              onChange={searchByName}
+              placeholder="Search..."
+              className={`search-input ${uiState.isExpanded ? "expanded" : ""}`}
+            />
+            <LazyLoadIcons
+              name="search"
+              className="search-btn"
+              content={"Search"}
+              onClick={() =>
+                setUiState((prev) => ({
+                  ...prev,
+                  isExpanded: !prev.isExpanded,
+                }))
+              }
+            />
+          </div>
           <LazyLoadIcons
             name="user"
             className="menu-option "

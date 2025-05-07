@@ -59,6 +59,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 20px;
 }
 
 .dropdown-list {
@@ -121,7 +122,6 @@
   transition: transform 0.7s, box-shadow 0.7s;
   height: 150px;
   width: 150px;
-  max-width: 75%;
 }
 
 .birthday-list-cntr section {
@@ -479,6 +479,10 @@
 
   .birthday-list-cntr {
     grid-template-columns: repeat(auto-fit, minmax(295px, 1fr));
+  }
+
+  .birthday-list-cntr img {
+    max-width: 75%;
   }
 }
 
