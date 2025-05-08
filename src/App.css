@@ -118,14 +118,15 @@
 
 .birthday-list-cntr img {
   border-radius: 50%;
-  box-shadow: 1px 5px 10px rgb(209, 199, 209);
   transition: transform 0.7s, box-shadow 0.7s;
   height: 150px;
   width: 150px;
 }
 
 .birthday-list-cntr section {
+  background-image: linear-gradient(#cdcdcd, #a887bc), linear-gradient(90deg, #8b18cd, #cd5616, #5cc8dc, red);
   border: 1px solid violet;
+  color: white;
   padding: 10px 20px;
   margin: 0px 0px 30px;
   border-radius: 10px;
@@ -352,7 +353,6 @@
 
 .birthday-list-cntr .celebrate-today {
   border: 3px solid transparent;
-  background-image: linear-gradient(white, white), linear-gradient(90deg, #8b18cd, #cd5616, #5cc8dc, #f00);
   background-clip: padding-box, border-box;
   animation: borderMove 3s linear infinite;
   background-size: 200% 100%;
@@ -453,6 +453,7 @@
   position: absolute;
   top: 10px;
   width: 20px;
+  color: #721772;
 }
 
 .edit-icon {

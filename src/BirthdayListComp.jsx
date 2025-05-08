@@ -258,7 +258,7 @@ export const BirthdayListComp = () => {
           state.list.map((item) => {
             const daysLeft = getDOB(item.dob);
             const color =
-              daysLeft === 0 ? "green" : daysLeft < 0 ? "gray" : "violet";
+              daysLeft === 0 ? "#7d497d" : daysLeft < 0 ? "#5a5858" : "#650765";
             return (
               <Fragment key={item.id}>
                 <section
@@ -310,7 +310,7 @@ export const BirthdayListComp = () => {
                       )}
                     {!state.showContent?.includes(item.id) && (
                       <>
-                        <h3>{item.name}</h3>
+                        <h3>{item.name?.toUpperCase()}</h3>
                         <p>{dayjs(item.dob).format(DATE_TYPE.DDMMMYYYY)}</p>
                       </>
                     )}
@@ -320,7 +320,7 @@ export const BirthdayListComp = () => {
                       className="grid-detail"
                       style={{ gridColumn: `0 / 4` }}
                     >
-                      <h3> {item.name}</h3>
+                      <h3> {item.name?.toUpperCase()}</h3>
                       <h5>DOB: {item.dob}</h5>
                       <h5>
                         {` Age: ${dayjs().diff(
