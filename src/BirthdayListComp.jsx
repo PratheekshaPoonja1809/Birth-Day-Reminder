@@ -1,18 +1,14 @@
+import { Fragment, useCallback, useEffect, useReducer, useState } from "react";
 import {
-  Fragment,
-  useCallback,
-  useEffect,
-  useReducer,
-  useState,
-} from "react";
-import {
-  DATA,
   DATE_TYPE,
   INITIAL_REDUCER_DATA,
   DROPDOWN_OPTIONS,
   REDUCER_DATA,
   useSession,
   MESSAGES,
+  ICON_COLOR,
+  GET_SAMPLE_DATA_URL,
+  SAMPLE_DATA,
 } from "./utils/Constants";
 import { Dropdown } from "./utils/Dropdown";
 import Tippy from "@tippyjs/react";
@@ -29,6 +25,7 @@ import ProfilePicDefault from "./assets/picture.png";
 import Celebrate from "./assets/celebrate.png";
 import { FeedbackComponent } from "./FeedbackComponent";
 import { LazyLoadIcons } from "./utils/LazyLoadIcons";
+import UseQuery from "./utils/UseQuery";
 
 const reducerFn = (state, action) => {
   switch (action.type) {
@@ -48,6 +45,7 @@ const reducerFn = (state, action) => {
 };
 
 export const BirthdayListComp = () => {
+  const { data:sampleData } = UseQuery(GET_SAMPLE_DATA_URL);
   const [searchInput, setSearchInput] = useState("");
 
   const [uiState, setUiState] = useState({
@@ -61,9 +59,8 @@ export const BirthdayListComp = () => {
   const { session, setSession } = useSession();
 
   const loadSampleData = () => {
-    if (!state.dataSource.length)
-      dispatch({ type: REDUCER_DATA.DATA_SOURCE, payload: DATA });
-    else dispatch({ type: REDUCER_DATA.DATA_SOURCE, payload: [] });
+    const dataToStore = !state.dataSource.length ? (sampleData??SAMPLE_DATA) : []
+    dispatch({ type: REDUCER_DATA.DATA_SOURCE, payload: dataToStore });
   };
 
   const showCompleteDetail = (details) => {
@@ -174,6 +171,7 @@ export const BirthdayListComp = () => {
               name="search"
               className="search-btn"
               content={"Search"}
+              color={ICON_COLOR}
               onClick={() =>
                 setUiState((prev) => ({
                   ...prev,
@@ -183,6 +181,7 @@ export const BirthdayListComp = () => {
             />
           </div>
           <LazyLoadIcons
+            color={ICON_COLOR}
             name="user"
             className="menu-option "
             content={MESSAGES.ADD_CONTACTS}
@@ -191,6 +190,7 @@ export const BirthdayListComp = () => {
           <LazyLoadIcons
             name={!state.dataSource.length ? "file_plus" : "file_minus"}
             className="menu-option "
+            color={ICON_COLOR}
             content={
               !state.dataSource.length
                 ? MESSAGES.LOAD_SAMPLE_DATA
@@ -200,6 +200,7 @@ export const BirthdayListComp = () => {
           />
           <LazyLoadIcons
             name="star"
+            color={ICON_COLOR}
             className="menu-option "
             content={MESSAGES.FEEDBACK}
             onClick={() =>

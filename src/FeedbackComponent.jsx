@@ -1,4 +1,4 @@
-import { FEEDBACK, MESSAGES } from "./utils/Constants";
+import { FEEDBACK, ICON_COLOR, MESSAGES } from "./utils/Constants";
 import { LazyLoadIcons } from "./utils/LazyLoadIcons";
 
 export const FeedbackComponent = () => {
@@ -10,6 +10,7 @@ export const FeedbackComponent = () => {
           name="mail"
           content={MESSAGES.MAIL_CONNECT}
           width="35px"
+          color={ICON_COLOR}
         />
       </a>{" "}
       or{" "}
@@ -18,6 +19,7 @@ export const FeedbackComponent = () => {
           name="linkedIn"
           content={MESSAGES.LINKEDIN_CONNECT}
           width="35px"
+          color={ICON_COLOR}
         />
       </a>
       {FEEDBACK.MSG2}.

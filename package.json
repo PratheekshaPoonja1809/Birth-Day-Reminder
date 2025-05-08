@@ -1,7 +1,7 @@
 {
   "name": "Birthday-Remainder",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -12,7 +12,9 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.75.5",
     "@tippyjs/react": "^4.2.6",
+    "axios": "^1.9.0",
     "dayjs": "^1.11.13",
     "prop-types": "^15.8.1",
     "react": "^19.0.0",
