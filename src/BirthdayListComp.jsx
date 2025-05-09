@@ -268,7 +268,7 @@ export const BirthdayListComp = () => {
                   className={`${
                     state.showContent?.includes(item.id)
                       ? "full-details-section"
-                      : ""
+                      : "simple-details"
                   } ${daysLeft === 0 ? "celebrate-today" : ""}`}
                 >
                   <div>

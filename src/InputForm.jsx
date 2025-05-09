@@ -144,7 +144,7 @@ export const InputForm = ({ onClose, data = {} }) => {
             value={inputs.name}
             onChange={changeInputData}
             onBlur={handleBlur}
-            maxLength="20"
+            maxLength="30"
             haserror={err.name}
           />
           <InputFields
@@ -154,7 +154,7 @@ export const InputForm = ({ onClose, data = {} }) => {
             value={inputs.email}
             onChange={changeInputData}
             onBlur={handleBlur}
-            maxLength="20"
+            maxLength="50"
             haserror={err.email}
           />
           <InputFields
@@ -184,7 +184,7 @@ export const InputForm = ({ onClose, data = {} }) => {
             value={inputs.relationship}
             onChange={changeInputData}
             onBlur={handleBlur}
-            maxLength="20"
+            maxLength="50"
           />
           <div>
             <Button

@@ -459,6 +459,22 @@
   color: #721772;
 }
 
+.grid-detail {
+  max-width: 75%;
+  min-width: 50%;
+}
+
+.simple-details {
+  text-align: center;
+  width: -webkit-fill-available;
+}
+
+.birthday-list-cntr h3 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .edit-icon {
   right: 40px;
 }
